@@ -90,7 +90,7 @@ function initialize()
 
 	// create atToolkitContext
 	arToolkitContext = new THREEx.ArToolkitContext({
-		cameraParametersUrl: 'data/camera_para.dat',
+		cameraParametersUrl: 'https://finalar.github.io/data/camera_para.dat',
 		detectionMode: 'mono'
 	});
 	
@@ -107,13 +107,13 @@ function initialize()
 	markerRootA = new THREE.Group();
 	scene.add(markerRootA);
 	let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRootA, {
-		type: 'pattern', patternUrl: "data/letterA.patt",
+		type: 'pattern', patternUrl: "https://finalar.github.io/data/letterA.patt",
 	});
 	
 	markerRootB = new THREE.Group();
 	scene.add(markerRootB);
 	let markerControls2 = new THREEx.ArMarkerControls(arToolkitContext, markerRootB, {
-		type: 'pattern', patternUrl: "data/letterB.patt",
+		type: 'pattern', patternUrl: "https://finalar.github.io/data/letterB.patt",
 	});
 
 	////////////////////////////////////////////////////////////
@@ -139,7 +139,7 @@ function initialize()
 	ballMesh = new THREE.Mesh(
 		new THREE.SphereGeometry(0.25, 32, 32),
 		new THREE.MeshLambertMaterial({ 
-			map: loader.load("images/basketball-gray.png"), 
+			map: loader.load("https://finalar.github.io/images/basketball-gray.png"), 
 			color: 0xff8800
 		})
 	);

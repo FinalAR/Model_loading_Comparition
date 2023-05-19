@@ -98,7 +98,7 @@ function initialize()
 	let geometry1 = new THREE.TorusGeometry(1.25,1.25, 64, 256); // radius, tube radius
 	
 	let loader = new THREE.TextureLoader();
-	let texture = loader.load( 'images/water-2.jpg' );
+	let texture = loader.load( 'https://finalar.github.io/images/water-2.jpg' );
 	// let texture = loader.load( 'images/color-grid.png' );
 	
 	// repeat texture
@@ -125,7 +125,7 @@ function initialize()
 	
 	// floor
 	let floorG = new THREE.PlaneGeometry(10,10,1,1);
-	let floorT = loader.load( 'images/sand.jpg' );
+	let floorT = loader.load( 'https://finalar.github.io/images/sand.jpg' );
 	let floorM = new THREE.MeshBasicMaterial({map: floorT});
 	let floor = new THREE.Mesh(floorG, floorM);
 	floor.rotation.x = -Math.PI/2;

@@ -10,13 +10,6 @@
 
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
 
-<!-- 
-  Example created by Lee Stemkoski: https://github.com/stemkoski
-  
-  For more information about portal-style effects, read:
-      https://en.wikibooks.org/wiki/OpenGL_Programming/Mini-Portal
-      https://th0mas.nl/2013/05/19/rendering-recursive-portals-with-opengl/
--->
 
 <script>
 
@@ -79,7 +72,7 @@ function initialize()
 	// floor
 	let floorGeometry = new THREE.PlaneGeometry(100, 100);
 	let floorMaterial = new THREE.MeshBasicMaterial({ 
-		map: loader.load( 'images/color-grid.png' ),
+		map: loader.load( 'https://finalar.github.io/images/color-grid.png' ),
 		transparent: true,
 		opacity: 0.5,
 	});
@@ -89,7 +82,7 @@ function initialize()
 	
 	// material for portals and blockers
 	let defaultMaterial = new THREE.MeshBasicMaterial({
-		map: loader.load("images/sphere-colored.png"), 
+		map: loader.load("https://finalar.github.io/images/sphere-colored.png"), 
 		color: 0x444444,
 		side: THREE.DoubleSide,
 		transparent: true
@@ -99,12 +92,12 @@ function initialize()
 	
 	// textures from http://www.humus.name/
 	let skyMaterialArray1 = [
-		new THREE.MeshBasicMaterial( { map: loader.load("images/beach/posx.jpg"), side: THREE.BackSide } ),
-		new THREE.MeshBasicMaterial( { map: loader.load("images/beach/negx.jpg"), side: THREE.BackSide } ),
-		new THREE.MeshBasicMaterial( { map: loader.load("images/beach/posy.jpg"), side: THREE.BackSide } ),
-		new THREE.MeshBasicMaterial( { map: loader.load("images/beach/negy.jpg"), side: THREE.BackSide } ),
-		new THREE.MeshBasicMaterial( { map: loader.load("images/beach/posz.jpg"), side: THREE.BackSide } ),
-		new THREE.MeshBasicMaterial( { map: loader.load("images/beach/negz.jpg"), side: THREE.BackSide } ),
+		new THREE.MeshBasicMaterial( { map: loader.load("https://finalar.github.io/images/beach/posx.jpg"), side: THREE.BackSide } ),
+		new THREE.MeshBasicMaterial( { map: loader.load("https://finalar.github.io/images/beach/negx.jpg"), side: THREE.BackSide } ),
+		new THREE.MeshBasicMaterial( { map: loader.load("https://finalar.github.io/images/beach/posy.jpg"), side: THREE.BackSide } ),
+		new THREE.MeshBasicMaterial( { map: loader.load("https://finalar.github.io/images/beach/negy.jpg"), side: THREE.BackSide } ),
+		new THREE.MeshBasicMaterial( { map: loader.load("https://finalar.github.io/images/beach/posz.jpg"), side: THREE.BackSide } ),
+		new THREE.MeshBasicMaterial( { map: loader.load("https://finalar.github.io/images/beach/negz.jpg"), side: THREE.BackSide } ),
 	];
 	let skyMesh1 = new THREE.Mesh(
 		new THREE.CubeGeometry(30,30,30),
@@ -135,7 +128,7 @@ function initialize()
 	let mainCameraMesh = new THREE.Mesh( 
 		new THREE.BoxGeometry(1,1,1), 
 		new THREE.MeshBasicMaterial({
-			map: loader.load("images/border.png"),
+			map: loader.load("https://finalar.github.io/images/border.png"),
 			color: 0xff00ff
 		}) 
 	);
@@ -161,12 +154,12 @@ function initialize()
 	
 	// textures from http://www.humus.name/
 	let skyMaterialArray2 = [
-		new THREE.MeshBasicMaterial( { map: loader.load("images/mountain/posx.jpg"), side: THREE.BackSide } ),
-		new THREE.MeshBasicMaterial( { map: loader.load("images/mountain/negx.jpg"), side: THREE.BackSide } ),
-		new THREE.MeshBasicMaterial( { map: loader.load("images/mountain/posy.jpg"), side: THREE.BackSide } ),
-		new THREE.MeshBasicMaterial( { map: loader.load("images/mountain/negy.jpg"), side: THREE.BackSide } ),
-		new THREE.MeshBasicMaterial( { map: loader.load("images/mountain/posz.jpg"), side: THREE.BackSide } ),
-		new THREE.MeshBasicMaterial( { map: loader.load("images/mountain/negz.jpg"), side: THREE.BackSide } ),
+		new THREE.MeshBasicMaterial( { map: loader.load("https://finalar.github.io/images/mountain/posx.jpg"), side: THREE.BackSide } ),
+		new THREE.MeshBasicMaterial( { map: loader.load("https://finalar.github.io/images/mountain/negx.jpg"), side: THREE.BackSide } ),
+		new THREE.MeshBasicMaterial( { map: loader.load("https://finalar.github.io/images/mountain/posy.jpg"), side: THREE.BackSide } ),
+		new THREE.MeshBasicMaterial( { map: loader.load("https://finalar.github.io/images/mountain/negy.jpg"), side: THREE.BackSide } ),
+		new THREE.MeshBasicMaterial( { map: loader.load("https://finalar.github.io/images/mountain/posz.jpg"), side: THREE.BackSide } ),
+		new THREE.MeshBasicMaterial( { map: loader.load("https://finalar.github.io/images/mountain/negz.jpg"), side: THREE.BackSide } ),
 	];
 	let skyMesh2 = new THREE.Mesh(
 		new THREE.CubeGeometry(30,30,30),
@@ -188,7 +181,7 @@ function initialize()
 	let otherCameraMesh = new THREE.Mesh( 
 		new THREE.BoxGeometry(1,1,1), 
 		new THREE.MeshBasicMaterial({
-			map: loader.load("images/border.png"),
+			map: loader.load("https://finalar.github.io/images/border.png"),
 			color: 0x00ffff
 		}) 
 	);

@@ -66,7 +66,7 @@ function initialize()
 	// floor
 	let floorGeometry = new THREE.PlaneGeometry(10,10);
 	let floorMaterial = new THREE.MeshBasicMaterial({ 
-		map: loader.load( 'images/color-grid.png' )
+		map: loader.load( 'https://finalar.github.io/images/color-grid.png' )
 	});
 	let floorMesh = new THREE.Mesh( floorGeometry, floorMaterial );
 	floorMesh.rotation.x = -Math.PI/2;
@@ -82,9 +82,9 @@ function initialize()
 	
 	let halfSphereGeometry = new THREE.SphereGeometry(sphereRadius, 32, 32, Math.PI, Math.PI); // startAngle, sweepAngle
 	
-	let cloakTexture = loader.load("images/color-grid.png");
+	let cloakTexture = loader.load("https://finalar.github.io/images/color-grid.png");
 	cloakMaterial = new THREE.MeshBasicMaterial({ map: cloakTexture, side: THREE.FrontSide, colorWrite: false }); // change colorWrite: true to see the cloak
-	let sceneTexture = loader.load("images/scene-sphere-outside.jpg");
+	let sceneTexture = loader.load("https://finalar.github.io/images/scene-sphere-outside.jpg");
 	sceneTexture.offset.x = 0.5;
 	sceneTexture.repeat.set(0.5, 1);
 	

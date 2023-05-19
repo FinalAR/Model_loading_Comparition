@@ -135,7 +135,7 @@ function initialize()
 
 	// create atToolkitContext
 	arToolkitContext = new THREEx.ArToolkitContext({
-		cameraParametersUrl: 'data/camera_para.dat',
+		cameraParametersUrl: 'https://finalar.github.io/data/camera_para.dat',
 		detectionMode: 'mono'
 	});
 	
@@ -154,7 +154,7 @@ function initialize()
 	scene.add(markerRoot1);
 	let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1, {
 		type : 'pattern',
-		patternUrl : "data/hiro.patt",
+		patternUrl : "https://finalar.github.io/data/hiro.patt",
 	})
 	
 	let loader = new THREE.TextureLoader();
@@ -162,7 +162,7 @@ function initialize()
 	// water
 	
 	let geometry1 = new THREE.TorusGeometry(1,1, 64, 256); // radius, tube radius
-	let texture1 = loader.load( 'images/water-2.jpg' );
+	let texture1 = loader.load( 'https://finalar.github.io/images/water-2.jpg' );
 	// let texture = loader.load( 'images/color-grid.png' );	
 	texture1.wrapS = THREE.RepeatWrapping;
 	texture1.wrapT = THREE.RepeatWrapping;
@@ -187,7 +187,7 @@ function initialize()
 	
 	// the inside of the hole
 	let geometry2	= new THREE.CylinderGeometry(1,1, 4, 32,1);
-	let texture2 = loader.load( 'images/tiles.jpg', render );
+	let texture2 = loader.load( 'https://finalar.github.io/images/tiles.jpg', render );
 	texture2.wrapS = THREE.RepeatWrapping;
 	texture2.wrapT = THREE.RepeatWrapping;
 	texture2.repeat.set(4,2);

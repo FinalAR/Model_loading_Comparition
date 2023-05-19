@@ -93,7 +93,7 @@ function initialize()
 
 	// create atToolkitContext
 	arToolkitContext = new THREEx.ArToolkitContext({
-		cameraParametersUrl: 'data/camera_para.dat',
+		cameraParametersUrl: 'https://finalar.github.io/data/camera_para.dat',
 		detectionMode: 'mono'
 	});
 	
@@ -112,7 +112,7 @@ function initialize()
 	
 	let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1, {
 		type : 'pattern',
-		patternUrl : "data/hiro.patt",
+		patternUrl : "https://finalar.github.io/data/hiro.patt",
 	})
 
 	// interpolates from last position to create smoother transitions when moving.

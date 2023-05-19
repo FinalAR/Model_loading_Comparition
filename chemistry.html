@@ -101,7 +101,7 @@ function initialize()
 
 	// create atToolkitContext
 	arToolkitContext = new THREEx.ArToolkitContext({
-		cameraParametersUrl: 'data/camera_para.dat',
+		cameraParametersUrl: 'https://finalar.github.io/data/camera_para.dat',
 		maxDetectionRate: 60,
 		detectionMode: "mono_and_matrix",
 		matrixCodeType: "3x3",
@@ -155,7 +155,7 @@ function initialize()
 			new THREE.PlaneGeometry(1.25,1.25), 
 			new THREE.MeshBasicMaterial({
 				color: cardColor,
-				map:loader.load("images/chemistry/card-" + elementString + ".png")
+				map:loader.load("https://finalar.github.io/images/chemistry/card-" + elementString + ".png")
 			})
 		);
 		card.receiveShadow = true;
@@ -167,7 +167,7 @@ function initialize()
 			new THREE.SphereGeometry(nucleusRadius, 16, 16),
 			new THREE.MeshLambertMaterial({
 				color: nucleusColor,
-				map:loader.load("images/chemistry/label-" + elementString + ".png")
+				map:loader.load("https://finalar.github.io/images/chemistry/label-" + elementString + ".png")
 			})
 		);
 		nucleus.rotation.y = -Math.PI/2;
@@ -199,7 +199,7 @@ function initialize()
 		let electronShadow = new THREE.Mesh(
 			new THREE.PlaneGeometry(1.025,1.025), 
 			new THREE.MeshBasicMaterial({
-				map:loader.load("images/chemistry/shadow-" + electronCount + ".png"),
+				map:loader.load("https://finalar.github.io/images/chemistry/shadow-" + electronCount + ".png"),
 				transparent: true,
 				opacity: 0.3,
 				side: THREE.DoubleSide // TODO: flip images to remove this
@@ -213,7 +213,7 @@ function initialize()
 			new THREE.PlaneGeometry(nucleusRadius*3, nucleusRadius*3), 
 			new THREE.MeshBasicMaterial({
 				color: 0xFFFF00,
-				map:loader.load("images/glow.png"),
+				map:loader.load("https://finalar.github.io/images/glow.png"),
 				transparent: true,
 				side: THREE.DoubleSide
 			})

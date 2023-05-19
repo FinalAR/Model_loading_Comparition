@@ -60,7 +60,7 @@ function initialize()
 	// floor
 	let floorGeometry = new THREE.PlaneGeometry(20,20);
 	let floorMaterial = new THREE.MeshBasicMaterial({ 
-		map: loader.load( 'images/color-grid.png' )
+		map: loader.load( 'https://finalar.github.io/images/color-grid.png' )
 	});
 	let floorMesh = new THREE.Mesh( floorGeometry, floorMaterial );
 	floorMesh.rotation.x = -Math.PI/2;
@@ -68,12 +68,12 @@ function initialize()
 	
 	let cubeGeometry = new THREE.BoxGeometry(1,1,1);
 	let materialArray = [
-		new THREE.MeshBasicMaterial( { map: loader.load("images/xpos.png") } ),
-		new THREE.MeshBasicMaterial( { map: loader.load("images/xneg.png") } ),
-		new THREE.MeshBasicMaterial( { map: loader.load("images/ypos.png") } ),
-		new THREE.MeshBasicMaterial( { map: loader.load("images/yneg.png") } ),
-		new THREE.MeshBasicMaterial( { map: loader.load("images/zpos.png") } ),
-		new THREE.MeshBasicMaterial( { map: loader.load("images/zneg.png") } ),
+		new THREE.MeshBasicMaterial( { map: loader.load("https://finalar.github.io/images/xpos.png") } ),
+		new THREE.MeshBasicMaterial( { map: loader.load("https://finalar.github.io/images/xneg.png") } ),
+		new THREE.MeshBasicMaterial( { map: loader.load("https://finalar.github.io/images/ypos.png") } ),
+		new THREE.MeshBasicMaterial( { map: loader.load("https://finalar.github.io/images/yneg.png") } ),
+		new THREE.MeshBasicMaterial( { map: loader.load("https://finalar.github.io/images/zpos.png") } ),
+		new THREE.MeshBasicMaterial( { map: loader.load("https://finalar.github.io/images/zneg.png") } ),
 	];
 	let cubeMesh = new THREE.Mesh( cubeGeometry, materialArray );
 	
@@ -84,7 +84,7 @@ function initialize()
 	
 	plane = new THREE.Mesh(
 		new THREE.PlaneGeometry(1,1),
-		new THREE.MeshBasicMaterial({map:loader.load("images/sphere-colored.png")})
+		new THREE.MeshBasicMaterial({map:loader.load("https://finalar.github.io/images/sphere-colored.png")})
 	);
 	plane.position.set(-4, 0.5, 1);
 	plane.rotation.y = Math.PI/4
