@@ -1,14 +1,25 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 body 
 {
 	background-color: #eeeeee;
-	background-image: url("../images/pixels.png");
-	background-repeat: repeat;      /* repeat, no-repeat */
-	background-attachment: fixed;   /* scroll, fixed */
-	background-position: top left;  /* for no-repeat setting: top/bottom, left/right */
-	margin: 2% 5% 0% 5%;            /* top, left, bottom, right or TRBL */
+	background-image: url("../images/pixels3.jpg");
+	background-size: auto;
+	height: 100%;
+
+  	/* Center and scale the image nicely */
+  	background-position: center;
+ 	background-repeat: no-repeat;
+  	background-size: cover;
 	
-	font-family: Georgia, Serif;	/* list font names in order of preference */
-	font-weight: normal;            /* normal, bold */
+	/*background-repeat: no-repeat;     repeat, no-repeat */
+	/*background-attachment: scroll;  /* scroll, fixed */
+	/*background-position: top left;  /* for no-repeat setting: top/bottom, left/right */
+	margin: 2% 5% 10% 5%;            /* top, left, bottom, right or TRBL */
+	
+	font-family: 'Inter', sans-serif;	/* list font names in order of preference */
+	font-weight: 400;            /* normal, bold */
 	font-style: normal;             /* normal, italic */
 	font-variant: normal;           /* normal, small-caps */
 	font-size: 16px;                /* font size */
@@ -22,30 +33,32 @@ body
 	min-height: 150px;
 	/* next two lines for elder IE compatibility */
 	height: auto !important; 
-	height: 150px; 
+	height: 150px;
+	margin-top: 20px;
+	margin-bottom: 20px; 
 	
 	/* Background color and gradients */
 	background: #eeeeee;
-	background: -moz-linear-gradient(top, #ffffff, #cccccc);
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), to(#cccccc));
+	/* background: -moz-linear-gradient(top, #ffffff, #cccccc); */
+	/* background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), to(#cccccc)); */
 	/* really nifty translucence */
-	background: -moz-linear-gradient(top, rgba(255, 255, 255, 0.8), rgba(200, 200, 200, 0.8) );
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from( rgba(255, 255, 255, 0.8) ), to( rgba(200, 200, 200, 0.8) ));
+	/* background: -moz-linear-gradient(top, rgba(255, 255, 255, 0.8), rgba(200, 200, 200, 0.8) );
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from( rgba(255, 255, 255, 0.8) ), to( rgba(200, 200, 200, 0.8) )); */
 	
 	/* Rounded corners */
-	-moz-border-radius: 15px 15px 15px 15px;
-	-webkit-border-radius: 15px 15px 15px 15px;
-	border-radius: 15px 15px 15px 15px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	border-radius: 10px 10px 10px 10px;
 }
 
 /* Page text links */
 a 
 {
 	font-size: 20px;
-	font-weight: bold;
+	font-weight: 900;
 	font-variantx: small-caps;
-	color:#00c;
-	text-shadow: 1px 1px 0px #aaa;
+	color:rgb(40, 40, 125);
+	/* text-shadow: 1px 1px 0px #aaa; */
 	margin: 13px 0px 0px 0px;
 	text-decoration: none;
 	
@@ -75,23 +88,25 @@ a:hover
 
 .superText
 {
-	color: #000;
+	color: #000000b6;
 	text-shadow: 1px 1px 0px #aaa;
+	font-weight: 600;
+	
 }
 
 a .superImage
 {  
 	height: 150px;
 	width: 225px;
-	border: 1px solid #000000;
+	/* border: 1px solid #000000; */
 	margin: 0px 20px 0px 0px;
 	float:left;
 	
 	
 	/* Rounded corners */
-	-moz-border-radius: 15px 15px 15px 15px;
-	-webkit-border-radius: 15px 15px 15px 15px;
-	border-radius: 15px 15px 15px 15px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	border-radius: 10px 10px 10px 10px;
 	
 	position: relative; 
 	
@@ -104,7 +119,8 @@ a .superImage
 
 a:hover .superImage
 {  
-	top: -10px;  
+	/* top: -10px;   */
+	transform: scale(1.1);
 	
 	/* fallback on standard opaque colors */
 	-moz-box-shadow: 10px 10px 5px #888;

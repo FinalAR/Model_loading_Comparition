@@ -3,9 +3,9 @@
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	<title>Hello, world!</title>
 	<!-- include three.js library -->
-	<script src='js/three.js'></script>
-	<script src='js/OBJLoader.js'></script>
-	<script src='js/MTLLoader.js'></script>
+	<script src='https://finalar.github.io/js/three.js' crossOrigin="anonymous"></script>
+	<script src='https://finalar.github.io/js/OBJLoader.js'></script>
+	<script src='https://finalar.github.io/js/MTLLoader.js'></script>
 	<!-- include jsartookit -->
 	<script src="jsartoolkit5/artoolkit.min.js"></script>
 	<script src="jsartoolkit5/artoolkit.api.js"></script>
@@ -126,13 +126,13 @@ function initialize()
 	function onError(xhr) { console.log( 'An error happened' ); }
 	
 	new THREE.MTLLoader()
-		.setPath( 'https://finalar.github.io/models/' )
-		.load( 'fish-2.mtl', function ( materials ) {
+		.setPath( 'https://finalar.github.io/models/Moto_Bike//' )
+		.load( 'Moto_Bike.mtl', function ( materials ) {
 			materials.preload();
 			new THREE.OBJLoader()
 				.setMaterials( materials )
-				.setPath( 'https://finalar.github.io/models/' )
-				.load( 'fish-2.obj', function ( group ) {
+				.setPath( 'https://finalar.github.io/models/Moto_Bike//' )
+				.load( 'Moto_Bike.obj', function ( group ) {
 					mesh0 = group.children[0];
 					mesh0.material.side = THREE.DoubleSide;
 					mesh0.position.y = 0.25;
