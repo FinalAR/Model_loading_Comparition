@@ -127,13 +127,13 @@ function initialize()
 	
 	console.time("Time this");
 	new THREE.MTLLoader()
-		.setPath( 'https://finalar.github.io/models/penguin/' )
+		.setPath( 'https://finalar.github.io/models/Penguin/' )
 		.load( 'PENGUIN.MTL', function ( materials ) {
 			materials.preload();
 			new THREE.OBJLoader()
 				.setMaterials( materials )
-				.setPath( 'https://finalar.github.io/models/penguin/' )
-				.load( 'PENGUIN.obj', function ( group ) {
+				.setPath( 'https://finalar.github.io/models/Penguin/' )
+				.load( 'PENGUIN.OBJ', function ( group ) {
 					mesh0 = group.children[0];
 					mesh0.material.side = THREE.DoubleSide;
 					mesh0.position.y = 0.70;

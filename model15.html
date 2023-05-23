@@ -128,7 +128,7 @@ function initialize()
 	console.time("Time this");
 	new THREE.MTLLoader()
 		.setPath( 'https://finalar.github.io/models/Bench/' )
-		.load( 'Bench_HighRes.MTL', function ( materials ) {
+		.load( 'Bench_HighRes.mtl', function ( materials ) {
 			materials.preload();
 			new THREE.OBJLoader()
 				.setMaterials( materials )

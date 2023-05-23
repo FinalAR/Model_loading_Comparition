@@ -133,7 +133,7 @@ function initialize()
 			new THREE.OBJLoader()
 				.setMaterials( materials )
 				.setPath( 'https://finalar.github.io/models/wolf/' )
-				.load( 'WOLF.obj', function ( group ) {
+				.load( 'WOLF.OBJ', function ( group ) {
 					mesh0 = group.children[0];
 					mesh0.material.side = THREE.DoubleSide;
 					mesh0.position.y = 0.25;
