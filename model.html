@@ -125,6 +125,7 @@ function initialize()
 	function onProgress(xhr) { console.log( (xhr.loaded / xhr.total * 100) + '% loaded' ); }
 	function onError(xhr) { console.log( 'An error happened' ); }
 	
+	console.time("Time this");
 	new THREE.MTLLoader()
 		.setPath( 'https://finalar.github.io/models/Moto_Bike/' )
 		.load( 'Moto_Bike.mtl', function ( materials ) {
@@ -138,8 +139,12 @@ function initialize()
 					mesh0.position.y = 0.25;
 					mesh0.scale.set(0.25,0.25,0.25);
 					markerRoot1.add(mesh0);
+					console.timeEnd("Time this");
 				}, onProgress, onError );
 		});
+
+	
+
 }
 
 
