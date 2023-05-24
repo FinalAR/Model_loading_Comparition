@@ -127,17 +127,17 @@ function initialize()
 	
 	console.time("Time this");
 	new THREE.MTLLoader()
-		.setPath( 'https://finalar.github.io/models/Moto_Bike/' )
-		.load( 'Moto_Bike.mtl', function ( materials ) {
+		.setPath( 'https://finalar.github.io/models/Toothless/' )
+		.load( 'toothless.mtl', function ( materials ) {
 			materials.preload();
 			new THREE.OBJLoader()
 				.setMaterials( materials )
-				.setPath( 'https://finalar.github.io/models/Moto_Bike/' )
-				.load( 'Moto_BIke.obj', function ( group ) {
+				.setPath( 'https://finalar.github.io/models/Toothless/' )
+				.load( 'toothless.obj', function ( group ) {
 					mesh0 = group.children[0];
 					mesh0.material.side = THREE.DoubleSide;
-					mesh0.position.y = 0.25;
-					mesh0.scale.set(0.25,0.25,0.25);
+					mesh0.position.y = 0.05;
+					mesh0.scale.set(0.01,0.01,0.01);
 					markerRoot1.add(mesh0);
 					console.timeEnd("Time this");
 				}, onProgress, onError );
