@@ -24,19 +24,20 @@
 		  <div class="label" id="phase 1 label">0%</div>
 		</div>
 	</div>
-
-	<div class='progress2'>
-		<div class="label2"><h2>Total Loading Duration</h2></div>
-	  </div>
-   </div>
-
-	<div class='progress3'>
+   <div class='progress2'>
+         <div class="label2"><h3>Total Loading Duration</h3></div>
+	</div>
+   <div class='progress3'>
 		<div class='bar' id="phase 2">
-			<div class="label" id="phase 2 label"><h3>0 (ms)</h3></div>
-			<div class="label" id="phase 2 label2"><h3>0 (s)</h3></div>
+			<div class="label" id="phase 2 label">0ms</div>
 		</div>  
 	</div>
-	</div>
+
+	<!-- <div class='progress3'> 
+		<div class='bar' id="phase 2">
+			<div class="label" id="phase 2 label2">0s</div>
+		</div>  
+	</div> -->
 
 <script>
 
@@ -242,8 +243,8 @@ function progressTime(phase, duration) {
   //var width = Math.floor(percentage * 100);
   //if (width <= 100) {
     elem.style.width = '100%';
-    document.getElementById(phase + " label").innerHTML = Math.floor(duration) + 'ms';
-	document.getElementById(phase + " label2").innerHTML = Math.floor(duration/1000) + 's';
+    document.getElementById(phase + " label").innerHTML = Math.floor(duration) + 'ms'+ ' -->' + Math.floor(duration/1000) + 's';
+	//document.getElementById(phase + " label2").innerHTML = Math.floor(duration/1000) + 's';
   //}
   console.log("Progress duration" + duration);
 }
