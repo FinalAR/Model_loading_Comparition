@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<title>Hello, world!</title>
+	<title>MODEL 16</title>
 	<!-- include three.js library -->
 	<script src='js/three.js'></script>
 	<script src='js/OBJLoader.js'></script>
@@ -14,6 +14,7 @@
 	<script src="threex/threex-artoolkitcontext.js"></script>
 	<script src="threex/threex-arbasecontrols.js"></script>
 	<script src="threex/threex-armarkercontrols.js"></script>
+	<link rel=stylesheet href="css/progress.css"/>
 </head>
 
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
@@ -118,8 +119,18 @@ function initialize()
 	mesh1.rotation.x = -Math.PI/2;
 	markerRoot1.add( mesh1 );
 	
-	function onProgress(xhr) { console.log( (xhr.loaded / xhr.total * 100) + '% loaded' ); }
-	function onError(xhr) { console.log( 'An error happened' ); }
+	function onProgress(xhr) { 
+		console.log( (xhr.loaded / xhr.total * 100) + '% loaded' ); 
+		progress('phase 1', xhr.loaded / xhr.total * 100);     
+     }
+
+	function onError(xhr) { 
+		console.log( 'An error happened' ); 
+		progress('phase 1', 'An error happened');     
+     }
+	var begin=Date.now();
+	var end;
+
 	
 	console.time("Time this");
 	new THREE.MTLLoader()
@@ -135,7 +146,11 @@ function initialize()
 					mesh0.position.y = 0.50;
 					mesh0.scale.set(0.75,0.75,0.75);
 					markerRoot1.add(mesh0);
-					console.timeEnd("Time this");
+					console.timeEnd("Time this")
+					end= Date.now()
+					var timeSpent=(end-begin);
+	                progressTime('phase 2', timeSpent);
+					
 				}, onProgress, onError );
 		});
 }

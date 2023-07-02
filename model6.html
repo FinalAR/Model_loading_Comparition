@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<title>Hello, world!</title>
+	<title>MODEL 06</title>
 	<!-- include three.js library -->
 	<script src='js/three.js'></script>
 	<script src='js/OBJLoader.js'></script>
@@ -14,10 +14,24 @@
 	<script src="threex/threex-artoolkitcontext.js"></script>
 	<script src="threex/threex-arbasecontrols.js"></script>
 	<script src="threex/threex-armarkercontrols.js"></script>
+	<link rel=stylesheet href="css/progress.css"/>
 </head>
 
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
 
+	<div class="progress">
+		<div class='bar' id="phase 1">
+		  <div class="label" id="phase 1 label">0%</div>
+		</div>
+	</div>
+   <div class='progress2'>
+         <div class="label2"><h3>Total Loading Duration</h3></div>
+	</div>
+   <div class='progress3'>
+		<div class='bar' id="phase 2">
+			<div class="label" id="phase 2 label">0ms</div>
+		</div>  
+	</div>
 
 <script>
 
@@ -118,8 +132,17 @@ function initialize()
 	mesh1.rotation.x = -Math.PI/2;
 	markerRoot1.add( mesh1 );
 	
-	function onProgress(xhr) { console.log( (xhr.loaded / xhr.total * 100) + '% loaded' ); }
-	function onError(xhr) { console.log( 'An error happened' ); }
+	function onProgress(xhr) { 
+		console.log( (xhr.loaded / xhr.total * 100) + '% loaded' ); 
+		progress('phase 1', xhr.loaded / xhr.total * 100);     
+     }
+
+	function onError(xhr) { 
+		console.log( 'An error happened' ); 
+		progress('phase 1', 'An error happened');     
+     }
+	var begin=Date.now();
+	var end;
 	
 	console.time("Time this");
 	new THREE.MTLLoader()
@@ -135,7 +158,12 @@ function initialize()
 					mesh0.position.y = 1.0;
 					mesh0.scale.set(0.50,0.50,0.50);
 					markerRoot1.add(mesh0);
-					console.timeEnd("Time this");
+					console.timeEnd("Time this")
+					end= Date.now()
+					var timeSpent=(end-begin);
+	                progressTime('phase 2', timeSpent);
+
+
 				}, onProgress, onError );
 		});
 }
@@ -164,6 +192,28 @@ function animate()
 	render();
 }
 
+//Prgress Loading Function
+function progress(phase, percentage) {
+  var elem = document.getElementById(phase);
+  var width = Math.floor(window.innerWidth* percentage)
+
+  //var width = Math.floor(percentage * 100);
+  //if (width <= 100) {
+    elem.style.width = percentage + '%';
+    document.getElementById(phase + " label").innerHTML = Math.floor(percentage) + '%';
+  //}
+  console.log("Progress width: " + width);
+  console.log("Progress presentage: " + percentage);
+}
+
+//Time loading 
+function progressTime(phase, duration) {
+  var elem = document.getElementById(phase);
+
+    elem.style.width = '100%';
+    document.getElementById(phase + " label").innerHTML = Math.floor(duration) + 'ms'+ ' -->' + Math.floor(duration/1000) + 's';
+    console.log("Progress duration: " + duration);
+}
 </script>
 
 </body>
