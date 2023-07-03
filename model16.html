@@ -179,6 +179,28 @@ function animate()
 	render();
 }
 
+//Prgress Loading Function
+function progress(phase, percentage) {
+  var elem = document.getElementById(phase);
+  var width = Math.floor(window.innerWidth* percentage)
+
+  //var width = Math.floor(percentage * 100);
+  //if (width <= 100) {
+    elem.style.width = percentage + '%';
+    document.getElementById(phase + " label").innerHTML = Math.floor(percentage) + '%';
+  //}
+  console.log("Progress width: " + width);
+  console.log("Progress presentage: " + percentage);
+}
+
+//Time loading 
+function progressTime(phase, duration) {
+  var elem = document.getElementById(phase);
+
+    elem.style.width = '100%';
+    document.getElementById(phase + " label").innerHTML = Math.floor(duration) + 'ms'+ ' -->' + Math.floor(duration/1000) + 's';
+    console.log("Progress duration: " + duration);
+}
 </script>
 
 </body>
