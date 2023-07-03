@@ -83,7 +83,7 @@
     color: #06D85F;
   }
   .popup .content {
-    max-height: 50%;
+    max-height: 80%;
     overflow: auto;
   }
   
