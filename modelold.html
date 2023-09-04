@@ -43,39 +43,12 @@ var markerRoot1;
 
 var mesh1;
 
-// Usage example for different targets
-const targetInfo1 = {
-    patternUrl: "https://finalar.github.io/data/hiro.patt",
-    meshColor: 0x0000ff,
-    modelPath: 'https://finalar.github.io/models/Toothless/',
-    modelFile: 'toothless.obj',
-    progressPhase: 'phase 2',
-	mappingPath: 'https://finalar.github.io/models/Toothless/',
-    mappingFile: 'toothless.mtl',
-	positionY: 0.05,
-	scaleSet:0.01
-};
-
-const targetInfo2 = {
-    patternUrl: "https://finalar.github.io/data/kanji.patt",
-    meshColor: 0xff0000,
-    modelPath: 'https://finalar.github.io/models/Pirate/',
-    modelFile: 'Pirate.obj',
-    progressPhase: 'phase 2',
-	mappingPath: 'https://finalar.github.io/models/Pirate/',
-    mappingFile: 'Pirate.mtl',
-	positionY: 0.25,
-	scaleSet:0.50
-};
-
-initialize(targetInfo1);
-initialize(targetInfo2);
-
+initialize();
 animate();
 
 
 
-function initialize(targetInfo)
+function initialize()
 {
 	scene = new THREE.Scene();
 
@@ -122,7 +95,7 @@ function initialize(targetInfo)
 		onResize()
 	});
 	
-	//handle resize event
+	// handle resize event
 	window.addEventListener('resize', function(){
 		onResize()
 	});
@@ -147,55 +120,57 @@ function initialize(targetInfo)
 	////////////////////////////////////////////////////////////
 
 	// build markerControls
-    markerRoot = new THREE.Group();
-    scene.add(markerRoot);
-    let markerControls = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
-        type: 'pattern',
-        patternUrl: targetInfo.patternUrl, // Use the pattern URL from targetInfo
-    });
+	markerRoot1 = new THREE.Group();
+	scene.add(markerRoot1);
+	let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1, {
+		type: 'pattern', patternUrl: "https://finalar.github.io/data/hiro.patt",
+	})
 
-    let geometry = new THREE.PlaneBufferGeometry(1, 1, 4, 4);
-    let material = new THREE.MeshBasicMaterial({ color: targetInfo.meshColor, opacity: 0.5 });
-    let mesh = new THREE.Mesh(geometry, material);
-    mesh.rotation.x = -Math.PI / 2;
-    markerRoot.add(mesh);
+	let geometry1 = new THREE.PlaneBufferGeometry(1,1, 4,4);
+	let loader = new THREE.TextureLoader();
+	// let texture = loader.load( 'images/earth.jpg', render );
+	let material1 = new THREE.MeshBasicMaterial( { color: 0x0000ff, opacity: 0.5 } );
+	mesh1 = new THREE.Mesh( geometry1, material1 );
+	mesh1.rotation.x = -Math.PI/2;
+	markerRoot1.add( mesh1 );
+	
+	function onProgress(xhr) { 
+		console.log( (xhr.loaded / xhr.total * 100) + '% loaded' ); 
+		progress('phase 1', xhr.loaded / xhr.total * 100);     
+     }
 
-    // Load 3D models and handle progress for different targets here
-    // You can use targetInfo to determine which 3D models to load and how to handle progress.
+	function onError(xhr) { 
+		console.log( 'An error happened' ); 
+		progress('phase 1', 'An error happened');     
+     }
+	var begin=Date.now();
+	var end;
 
-    function onProgress(xhr) {
-        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-        progress('phase 1', xhr.loaded / xhr.total * 100);
-    }
+	console.time("Time this");
+	new THREE.MTLLoader()
+		.setPath( 'https://finalar.github.io/models/Toothless/' )
+		.load( 'toothless.mtl', function ( materials ) {
+			materials.preload();
+			new THREE.OBJLoader()
+				.setMaterials( materials )
+				.setPath( 'https://finalar.github.io/models/Toothless/' )
+				.load( 'toothless.obj', function ( group ) {
+					mesh0 = group.children[0];
+					mesh0.material.side = THREE.DoubleSide;
+					mesh0.position.y = 0.05;
+					mesh0.scale.set(0.01,0.01,0.01);
+					markerRoot1.add(mesh0);
+					console.timeEnd("Time this")
+					end= Date.now()
+					var timeSpent=(end-begin);
+	                progressTime('phase 2', timeSpent);
 
-    function onError(xhr) {
-        console.log('An error happened');
-        progress('phase 1', 'An error happened');
-    }
 
-    var begin = Date.now();
-    var end;
+				}, onProgress, onError );
+		});
 
-    console.time("Time this");
-    new THREE.MTLLoader()
-        .setPath(targetInfo.mappingPath) // Use the modelPath from targetInfo
-        .load(targetInfo.mappingFile, function (materials) {
-            materials.preload();
-            new THREE.OBJLoader()
-                .setMaterials(materials)
-                .setPath(targetInfo.modelPath)
-                .load(targetInfo.modelFile, function (group) {
-                    mesh0 = group.children[0];
-                    mesh0.material.side = THREE.DoubleSide;
-                    mesh0.position.y = targetInfo.positionY;
-                    mesh0.scale.set(targetInfo.scaleSet, targetInfo.scaleSet, targetInfo.scaleSet);
-                    markerRoot.add(mesh0);
-                    console.timeEnd("Time this");
-                    end = Date.now();
-                    var timeSpent = (end - begin);
-                    progressTime(targetInfo.progressPhase, timeSpent);
-                }, onProgress, onError);
-        });
+	
+
 }
 
 
