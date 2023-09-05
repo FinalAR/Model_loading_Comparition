@@ -215,6 +215,156 @@ function initialize()
 
 				}, onProgress, onError );
 		});
+
+
+	// build markerControls
+	markerRoot3 = new THREE.Group();
+	scene.add(markerRoot3);
+	let markerControls3 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot3, {
+		type: 'pattern', patternUrl: "https://finalar.github.io/data/letterA.patt",
+	})
+
+	let geometry3 = new THREE.PlaneBufferGeometry(1,1, 4,4);
+	let loader3 = new THREE.TextureLoader();
+	// let texture = loader.load( 'images/earth.jpg', render );
+	let material3 = new THREE.MeshBasicMaterial( { color: 0x0000ff, opacity: 0.5 } );
+	mesh3 = new THREE.Mesh( geometry3, material3 );
+	mesh3.rotation.x = -Math.PI/2;
+	markerRoot3.add( mesh3 );
+	
+	function onProgress(xhr) { 
+		console.log( (xhr.loaded / xhr.total * 100) + '% loaded' ); 
+		progress('phase 1', xhr.loaded / xhr.total * 100);     
+     }
+
+	function onError(xhr) { 
+		console.log( 'An error happened' ); 
+		progress('phase 1', 'An error happened');     
+     }
+	var begin=Date.now();
+	var end;
+
+	console.time("Time this");
+	new THREE.MTLLoader()
+		.setPath( 'https://finalar.github.io/models/semi_truck/' )
+		.load( 'Blank.mtl', function ( materials ) {
+			materials.preload();
+			new THREE.OBJLoader()
+				.setMaterials( materials )
+				.setPath( 'https://finalar.github.io/models/semi_truck/' )
+				.load( '18550_Semi_Truck w_Trailer_wheel_v1_NEW.obj', function ( group ) {
+					mesh0 = group.children[0];
+					mesh0.material.side = THREE.DoubleSide;
+					mesh0.position.y = 1.0;
+					mesh0.scale.set(0.50,0.50,0.50);
+					markerRoot3.add(mesh0);
+					console.timeEnd("Time this")
+					end= Date.now()
+					var timeSpent=(end-begin);
+	                progressTime('phase 2', timeSpent);
+
+
+				}, onProgress, onError );
+		});
+
+
+	// build markerControls
+	markerRoot4 = new THREE.Group();
+	scene.add(markerRoot4);
+	let markerControls4 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot4, {
+		type: 'pattern', patternUrl: "https://finalar.github.io/data/letterB.patt",
+	})
+
+	let geometry4 = new THREE.PlaneBufferGeometry(1,1, 4,4);
+	let loader4 = new THREE.TextureLoader();
+	// let texture = loader.load( 'images/earth.jpg', render );
+	let material4 = new THREE.MeshBasicMaterial( { color: 0x0000ff, opacity: 0.5 } );
+	mesh4 = new THREE.Mesh( geometry4, material4 );
+	mesh4.rotation.x = -Math.PI/2;
+	markerRoot4.add( mesh4 );
+	
+	function onProgress(xhr) { 
+		console.log( (xhr.loaded / xhr.total * 100) + '% loaded' ); 
+		progress('phase 1', xhr.loaded / xhr.total * 100);     
+     }
+
+	function onError(xhr) { 
+		console.log( 'An error happened' ); 
+		progress('phase 1', 'An error happened');     
+     }
+	var begin=Date.now();
+	var end;
+
+	console.time("Time this");
+	new THREE.MTLLoader()
+		.setPath( 'https://finalar.github.io/models/wolf/' )
+		.load( 'WOLF.MTL', function ( materials ) {
+			materials.preload();
+			new THREE.OBJLoader()
+				.setMaterials( materials )
+				.setPath( 'https://finalar.github.io/models/wolf/' )
+				.load( 'WOLF.OBJ', function ( group ) {
+					mesh0 = group.children[0];
+					mesh0.material.side = THREE.DoubleSide;
+					mesh0.position.y = 0.25;
+					mesh0.scale.set(3.0,3.0,3.0);
+					markerRoot4.add(mesh0);
+					console.timeEnd("Time this")
+					end= Date.now()
+					var timeSpent=(end-begin);
+	                progressTime('phase 2', timeSpent);
+
+				}, onProgress, onError );
+		});
+
+
+		// build markerControls
+	markerRoot5 = new THREE.Group();
+	scene.add(markerRoot5);
+	let markerControls5 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot5, {
+		type: 'pattern', patternUrl: "https://finalar.github.io/data/letterC.patt",
+	})
+
+	let geometry5 = new THREE.PlaneBufferGeometry(1,1, 4,4);
+	let loader5 = new THREE.TextureLoader();
+	// let texture = loader.load( 'images/earth.jpg', render );
+	let material5 = new THREE.MeshBasicMaterial( { color: 0x0000ff, opacity: 0.5 } );
+	mesh5 = new THREE.Mesh( geometry5, material5 );
+	mesh5.rotation.x = -Math.PI/2;
+	markerRoot5.add( mesh5 );
+	
+	function onProgress(xhr) { 
+		console.log( (xhr.loaded / xhr.total * 100) + '% loaded' ); 
+		progress('phase 1', xhr.loaded / xhr.total * 100);     
+     }
+
+	function onError(xhr) { 
+		console.log( 'An error happened' ); 
+		progress('phase 1', 'An error happened');     
+     }
+	var begin=Date.now();
+	var end;
+
+	console.time("Time this");
+	new THREE.MTLLoader()
+		.setPath( 'https://finalar.github.io/models/Skull2/' )
+		.load( 'Blank.mtl', function ( materials ) {
+			materials.preload();
+			new THREE.OBJLoader()
+				.setMaterials( materials )
+				.setPath( 'https://finalar.github.io/models/Skull2/' )
+				.load( 'CraneoOBJ.obj', function ( group ) {
+					mesh0 = group.children[0];
+					mesh0.material.side = THREE.DoubleSide;
+					mesh0.position.y = 0.25;
+					mesh0.scale.set(0.25,0.25,0.25);
+					markerRoot5.add(mesh0);
+					console.timeEnd("Time this")
+					end= Date.now()
+					var timeSpent=(end-begin);
+	                progressTime('phase 2', timeSpent);
+				}, onProgress, onError );
+		});
 }
 
 
