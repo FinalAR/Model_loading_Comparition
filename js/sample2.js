@@ -151,7 +151,7 @@ function init() {
     markerControls.addEventListener("markerFound", function(ev){
         console.log("markerFound...");
     })
-    // // It seems that this event is not registered at least in AR.js ver 3.3.1
+    // It seems that this event is not registered at least in AR.js ver 3.3.1
     markerControls.addEventListener("markerLost", function(ev){
         console.log("markerLost...");
     })

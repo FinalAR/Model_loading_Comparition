@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <head>
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	<title>MODEL 01</title>
 	<!-- include three.js library -->
-	<script src='https://finalar.github.io/js/three.js' crossOrigin="anonymous"></script>
-	<script src='https://finalar.github.io/js/OBJLoader.js'></script>
-	<script src='https://finalar.github.io/js/MTLLoader.js'></script>
+	<script src="https://finalar.github.io/js/three.js" crossorigin="anonymous"></script>
+	<script src="https://finalar.github.io/js/OBJLoader.js"></script>
+	<script src="https://finalar.github.io/js/MTLLoader.js"></script>
 	<!-- include jsartookit -->
 	<script src="jsartoolkit5/artoolkit.min.js"></script>
 	<script src="jsartoolkit5/artoolkit.api.js"></script>
@@ -14,8 +15,8 @@
 	<script src="threex/threex-artoolkitcontext.js"></script>
 	<script src="threex/threex-arbasecontrols.js"></script>
 	<script src="threex/threex-armarkercontrols.js"></script>
-	<link rel=stylesheet href="css/progress.css"/>
-	<link rel=stylesheet href="css/popup.css"/>
+	<link rel="stylesheet" href="css/progress.css">
+	<link rel="stylesheet" href="css/popup.css">
 </head>
 
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
@@ -68,15 +69,21 @@ const targetInfo2 = {
 	scaleSet:0.50
 };
 
-initialize(targetInfo1);
-initialize(targetInfo2);
+// initialize(targetInfo1);
+//initialize(targetInfo2);
 
+var targets = [targetInfo1, targetInfo2];
+
+console.log(targets);
+
+initialize();
 animate();
 
 
 
-function initialize(targetInfo)
+function initialize()
 {
+
 	scene = new THREE.Scene();
 
 	let ambientLight = new THREE.AmbientLight( 0xcccccc, 1.0 );
@@ -151,14 +158,62 @@ function initialize(targetInfo)
     scene.add(markerRoot);
     let markerControls = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
         type: 'pattern',
-        patternUrl: targetInfo.patternUrl, // Use the pattern URL from targetInfo
+        patternUrl: '', // Use the pattern URL from targetInfo
     });
 
-    let geometry = new THREE.PlaneBufferGeometry(1, 1, 4, 4);
-    let material = new THREE.MeshBasicMaterial({ color: targetInfo.meshColor, opacity: 0.5 });
+	let geometry = new THREE.PlaneBufferGeometry(1, 1, 4, 4);
+    let material = new THREE.MeshBasicMaterial({ color: 0xff0000, opacity: 0.5 });
     let mesh = new THREE.Mesh(geometry, material);
     mesh.rotation.x = -Math.PI / 2;
     markerRoot.add(mesh);
+
+	var modelLoaded = false; // Flag to track if the model has been loaded
+	var loadingInProcess = false;
+	markerControls.addEventListener("markerFound", function(ev){
+        console.log("markerFound...");
+		
+		var begin = Date.now();
+		var end;
+
+		if (!modelLoaded && !loadingInProcess) {
+		// loadingInProcess = true;
+        // console.time("Time this");
+        // new THREE.MTLLoader()
+        //     .setPath(targetInfo.mappingPath) // Use the modelPath from targetInfo
+        //     .load(targetInfo.mappingFile, function (materials) {
+        //         materials.preload();
+        //         new THREE.OBJLoader()
+        //             .setMaterials(materials)
+        //             .setPath(targetInfo.modelPath)
+        //             .load(targetInfo.modelFile, function (group) {
+        //                 mesh0 = group.children[0];
+        //                 mesh0.material.side = THREE.DoubleSide;
+        //                 mesh0.position.y = targetInfo.positionY;
+        //                 mesh0.scale.set(targetInfo.scaleSet, targetInfo.scaleSet, targetInfo.scaleSet);
+        //                 markerRoot.add(mesh0);
+        //                 console.timeEnd("Time this");
+        //                 end = Date.now();
+        //                 var timeSpent = (end - begin);
+        //                 progressTime(targetInfo.progressPhase, timeSpent);
+
+        //                 // Set the modelLoaded flag to true once the model is loaded
+        //                 modelLoaded = true;
+		// 				loadingInProcess = false;
+        //             }, onProgress, onError);
+
+        //     });
+    	
+		}
+
+    })
+
+
+    // It seems that this event is not registered at least in AR.js ver 3.3.1
+    markerControls.addEventListener("markerLost", function(ev){
+        console.log("markerLost...");
+    })
+
+
 
     // Load 3D models and handle progress for different targets here
     // You can use targetInfo to determine which 3D models to load and how to handle progress.
@@ -173,29 +228,7 @@ function initialize(targetInfo)
         progress('phase 1', 'An error happened');
     }
 
-    var begin = Date.now();
-    var end;
-
-    console.time("Time this");
-    new THREE.MTLLoader()
-        .setPath(targetInfo.mappingPath) // Use the modelPath from targetInfo
-        .load(targetInfo.mappingFile, function (materials) {
-            //materials.preload();
-            new THREE.OBJLoader()
-                .setMaterials(materials)
-                .setPath(targetInfo.modelPath)
-                .load(targetInfo.modelFile, function (group) {
-                    mesh0 = group.children[0];
-                    mesh0.material.side = THREE.DoubleSide;
-                    mesh0.position.y = targetInfo.positionY;
-                    mesh0.scale.set(targetInfo.scaleSet, targetInfo.scaleSet, targetInfo.scaleSet);
-                    markerRoot.add(mesh0);
-                    console.timeEnd("Time this");
-                    end = Date.now();
-                    var timeSpent = (end - begin);
-                    progressTime(targetInfo.progressPhase, timeSpent);
-                }, onProgress, onError);
-        });
+ 
 }
 
 
