@@ -48,3 +48,26 @@
     line-height: 50px;
     /* color: white; */
   }
+
+
+/* body > footer {
+  flex-shrink: 0;
+} */
+
+footer {
+	text-align: center;
+}
+
+/* :is(footer) > * {
+	margin-inline: auto;
+}
+
+footer {
+	padding: var(--padding-xl);
+}
+
+footer {
+  font-weight: var(--fw-700);
+  color: var(--c-ac-tx);
+  background-color: var(--c-bg-2);
+} */

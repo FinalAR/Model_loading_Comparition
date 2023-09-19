@@ -2,7 +2,7 @@
 
 <head>
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<title>MODEL 01</title>
+	<title>IT LOD MODELS</title>
 	<!-- include three.js library -->
 	<script src='https://finalar.github.io/js/three.js' crossOrigin="anonymous"></script>
 	<script src='https://finalar.github.io/js/OBJLoader.js'></script>
@@ -16,7 +16,13 @@
 	<script src="threex/threex-arbasecontrols.js"></script>
 	<script src="threex/threex-armarkercontrols.js"></script>
 	<link rel=stylesheet href="css/progress.css" />
+	<link rel=stylesheet href="css/navBar.css" />
 	<link rel=stylesheet href="css/popup.css" />
+	<script src="./js/ar-nft.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r126/three.min.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r126/examples/js/loaders/GLTFLoader.js"></script> -->
+	<!-- <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script> -->
 </head>
 
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
@@ -36,6 +42,39 @@
 			<div class="label" id="phase 2 label">0ms</div>
 		</div>
 	</div>
+
+	<nav class="main-menu">
+		<ul>
+			<li>
+				<a href="#">
+					<!-- <box-icon name='signal-3'></box-icon> -->
+					<!-- <i class="fa fa-home nav-icon"></i> -->
+					<span class="nav-text">H</span>
+				</a>
+			</li>
+
+			<li>
+				<a href="#">
+					<!-- <box-icon name='signal-2' ></box-icon> -->
+					<!-- <i class="fa fa-image nav-icon"></i> -->
+					<span class="nav-text">M</span>
+				</a>
+			</li>
+
+			<li>
+				<a href="#">
+					<!-- <box-icon name='signal-1'></box-icon> -->
+					<!-- <i class="fa fa-pen nav-icon"></i> -->
+					<span class="nav-text">L</span>
+				</a>
+			</li>
+		</ul>
+	</nav>
+
+	<footer>
+		<div id="marker_label">Marker Not Found</div>
+	</footer>
+
 	<script>
 
 		var scene, camera, renderer, clock, deltaTime, totalTime;
@@ -45,10 +84,11 @@
 		var markerRoot1;
 
 		var mesh1;
+		let nftName = "ramen-1000px";
 
 		// Usage example for different targets
 		const targetInfo1 = {
-			patternUrl: "https://finalar.github.io/data/hiro.patt",
+			nftUrl: "https://followthedarkside.github.io/arjs-image-tracking-sample/resources/nft/" + nftName,
 			meshColor: 0x0000ff,
 			modelPath: 'https://finalar.github.io/models/Toothless/',
 			modelFile: 'toothless.obj',
@@ -60,7 +100,7 @@
 		};
 
 		const targetInfo2 = {
-			patternUrl: "https://finalar.github.io/data/kanji.patt",
+			nftUrl: "https://followthedarkside.github.io/arjs-image-tracking-sample/resources/nft/" + nftName,
 			meshColor: 0xff0000,
 			modelPath: 'https://finalar.github.io/models/Pirate/',
 			modelFile: 'Pirate.obj',
@@ -71,18 +111,35 @@
 			scaleSet: 0.50
 		};
 
-		var targets = [targetInfo1, targetInfo2];
+		const targetInfo3 = {
+			nftUrl: "https://followthedarkside.github.io/arjs-image-tracking-sample/resources/nft/" + nftName,
+			meshColor: 0xff0000,
+			modelPath: 'https://finalar.github.io/models/Pirate/',
+			modelFile: 'Pirate.obj',
+			progressPhase: 'phase 2',
+			mappingPath: 'https://finalar.github.io/models/Pirate/',
+			mappingFile: 'Pirate.mtl',
+			positionY: 0.25,
+			scaleSet: 0.50
+		};
 
-		//initialize(targetInfo1);
+
+		initialize(targetInfo2);
 		//initialize(targetInfo2);
-		
-		initialize();
 
 		animate();
 
 
 
-		function initialize() {
+		function initialize(targetInfo) {
+
+			let width  = 640;
+    		let height = 480;
+			let windowWidth  = window.innerWidth;
+			let windowHeight = window.innerHeight;
+
+			console.log("window-size:", windowWidth, windowHeight);
+
 
 			scene = new THREE.Scene();
 
@@ -94,8 +151,11 @@
 
 			renderer = new THREE.WebGLRenderer({
 				antialias: true,
-				alpha: true
+				alpha: true,
+				precision: 'mediump',
 			});
+			
+			renderer.setPixelRatio(window.devicePixelRatio);
 			renderer.setClearColor(new THREE.Color('lightgrey'), 0)
 			renderer.setSize(640, 480);
 			renderer.domElement.style.position = 'absolute'
@@ -113,9 +173,17 @@
 
 			arToolkitSource = new THREEx.ArToolkitSource({
 				sourceType: 'webcam',
+
+				// resolution of at which we initialize in the source image
+				sourceWidth: width,
+				sourceHeight: height,
 			});
 
 			function onResize() {
+				// windowHeight = window.innerHeight;
+				// console.log("window-size:", windowWidth, windowHeight);
+				// renderer.setPixelRatio(window.devicePixelRatio);
+				// renderer.setSize(windowWidth, windowHeight);
 				arToolkitSource.onResize()
 				arToolkitSource.copySizeTo(renderer.domElement)
 				if (arToolkitContext.arController !== null) {
@@ -132,6 +200,12 @@
 				onResize()
 			});
 
+			// Listener for end loading of NFT marker
+			window.addEventListener('arjs-nft-loaded', function (ev) {
+				console.log("listener for end loading of NFT marker...");
+			})
+
+
 			////////////////////////////////////////////////////////////
 			// setup arToolkitContext
 			////////////////////////////////////////////////////////////	
@@ -139,11 +213,16 @@
 			// create atToolkitContext
 			arToolkitContext = new THREEx.ArToolkitContext({
 				cameraParametersUrl: 'https://finalar.github.io/data/camera_para.dat',
-				detectionMode: 'mono'
+				detectionMode: 'mono',
+				// resolution of at which we detect pose in the source image
+				//canvasWidth: width,
+				//canvasHeight: height,
 			});
 
 			// copy projection matrix to camera when initialization complete
 			arToolkitContext.init(function onCompleted() {
+				// copy projection matrix to camera
+				console.log("copy projection matrix to camera...")
 				camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
 			});
 
@@ -154,69 +233,66 @@
 			// build markerControls
 			markerRoot = new THREE.Group();
 			scene.add(markerRoot);
-			let markerControls = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
-				type: 'pattern',
-				patternUrl: targetInfo1.patternUrl, // This will be set dynamically
+
+
+			let markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
+				type : 'nft',
+        		descriptorsUrl : targetInfo.nftUrl,
+        		changeMatrixMode: 'cameraTransformMatrix'
 			});
 
 			let geometry = new THREE.PlaneBufferGeometry(1, 1, 4, 4);
-			let material = new THREE.MeshBasicMaterial({ color: '0x0000ff', opacity: 0.5 });
+			let material = new THREE.MeshBasicMaterial({ color: targetInfo.meshColor, opacity: 0.5 });
 			let mesh = new THREE.Mesh(geometry, material);
 			mesh.rotation.x = -Math.PI / 2;
 			markerRoot.add(mesh);
 
+			let model = null;
+			
 			var modelLoaded = false; // Flag to track if the model has been loaded
 			var loadingInProcess = false;
 			markerControls.addEventListener("markerFound", function (ev) {
 				console.log("markerFound...");
+				document.getElementById("marker_label").innerHTML = 'Marker Found';
+				var begin = Date.now();
+				var end;
 
-				// Iterate through the array of targets
-				for (let i = 0; i < targets.length; i++) {
-					const targetInfo = targets[i];
+				if (!modelLoaded && !loadingInProcess) {
+					loadingInProcess = true;
+					console.time("Time this");
+					new THREE.MTLLoader()
+						.setPath(targetInfo.mappingPath) // Use the modelPath from targetInfo
+						.load(targetInfo.mappingFile, function (materials) {
+							materials.preload();
+							new THREE.OBJLoader()
+								.setMaterials(materials)
+								.setPath(targetInfo.modelPath)
+								.load(targetInfo.modelFile, function (group) {
+									mesh0 = group.children[0];
+									mesh0.material.side = THREE.DoubleSide;
+									mesh0.position.y = targetInfo.positionY;
+									mesh0.scale.set(targetInfo.scaleSet, targetInfo.scaleSet, targetInfo.scaleSet);
+									scene.add(mesh0)
+									markerRoot.add(mesh0);
+									console.log(mesh0)
+									console.timeEnd("Time this");
+									end = Date.now();
+									var timeSpent = (end - begin);
+									progressTime(targetInfo.progressPhase, timeSpent);
 
-					// Check if the detected marker matches the current target
-					//console.log(ev.toString());
-					if (ev.data.marker.patternUrl === targetInfo.patternUrl) {
-						
-						var begin = Date.now();
-						var end;
-
-						if (!modelLoaded && !loadingInProcess) {
-							loadingInProcess = true;
-							console.time("Time this");
-							new THREE.MTLLoader()
-								.setPath(targetInfo.mappingPath) // Use the modelPath from targetInfo
-								.load(targetInfo.mappingFile, function (materials) {
-									materials.preload();
-									new THREE.OBJLoader()
-										.setMaterials(materials)
-										.setPath(targetInfo.modelPath)
-										.load(targetInfo.modelFile, function (group) {
-											mesh0 = group.children[0];
-											mesh0.material.side = THREE.DoubleSide;
-											mesh0.position.y = targetInfo.positionY;
-											mesh0.scale.set(targetInfo.scaleSet, targetInfo.scaleSet, targetInfo.scaleSet);
-											markerRoot.add(mesh0);
-											console.timeEnd("Time this");
-											end = Date.now();
-											var timeSpent = (end - begin);
-											progressTime(targetInfo.progressPhase, timeSpent);
-
-											// Set the modelLoaded flag to true once the model is loaded
-											modelLoaded = true;
-											loadingInProcess = false;
-										}, onProgress, onError);
-								});
-						}
-					}
+									// Set the modelLoaded flag to true once the model is loaded
+									modelLoaded = true;
+									loadingInProcess = false;
+								}, onProgress, onError);
+						});
 				}
-
 			})
 
 
 			// It seems that this event is not registered at least in AR.js ver 3.3.1
 			markerControls.addEventListener("markerLost", function (ev) {
 				console.log("markerLost...");
+				document.getElementById("marker_label").innerHTML = 'Marker Lost';
 			})
 
 
@@ -255,8 +331,12 @@
 			requestAnimationFrame(animate);
 			deltaTime = clock.getDelta();
 			totalTime += deltaTime;
+
 			update();
+			//scene.visible =markerRoot.visible;
 			render();
+
+
 		}
 		//Prgress Loading Function
 		function progress(phase, percentage) {
