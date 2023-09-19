@@ -43,6 +43,10 @@
 		</div>  
 	</div>
 
+	<footer>
+		<div id="marker_label">Marker Not Found</div>
+	</footer>
+
 <script>
 
 var scene, camera, renderer, clock, deltaTime, totalTime;
@@ -151,32 +155,50 @@ function initialize()
 		console.log( 'An error happened' ); 
 		progress('phase 1', 'An error happened');     
      }
-	var begin=Date.now();
-	var end;
 	
 	console.time("Time this");
 	let model = null;
+	var modelLoaded = false; // Flag to track if the model has been loaded
+	var loadingInProcess = false;
 
-	let texture = new THREE.TextureLoader().load('https://followthedarkside.github.io/arjs-image-tracking-sample/resources/Map-COL.jpg');
-	const GFloader = new THREE.GLTFLoader();
+	markerControls1.addEventListener("markerFound", function(ev){
+        console.log("markerFound...");
+		document.getElementById("marker_label").innerHTML = 'Marker Found';
+		var begin = Date.now();
+		var end;
 
-	GFloader.load( 'https://followthedarkside.github.io/arjs-image-tracking-sample/resources/LeePerrySmith.glb', function ( gltf ) {
-	 				model = gltf.scene;
-            		model.name = "model-face";
+		if (!modelLoaded && !loadingInProcess) {
+		loadingInProcess = true;
+		
+		let texture = new THREE.TextureLoader().load('https://followthedarkside.github.io/arjs-image-tracking-sample/resources/Map-COL.jpg');
+		
+		const GFloader = new THREE.GLTFLoader();
 
-					gltf.scene.traverse( function ( child ) {
-						if ( child.isMesh ) {
-							console.log("isMesh...");
-							child.material.map = texture;
-						}
-					});
-					markerRoot1.add(model);
-					console.timeEnd("Time this")
-					end= Date.now()
-					var timeSpent=(end-begin);
-	                progressTime('phase 2', timeSpent);
+		GFloader.load( 'https://followthedarkside.github.io/arjs-image-tracking-sample/resources/LeePerrySmith.glb', function ( gltf ) {
+						model = gltf.scene;
+						model.name = "model-face";
 
-		}, onProgress, onError);
+						gltf.scene.traverse( function ( child ) {
+							if ( child.isMesh ) {
+								console.log("isMesh...");
+								child.material.map = texture;
+							}
+						});
+						model.position.y = 1;
+						model.scale.set(0.3,0.3,0.3);
+						markerRoot1.add(model);
+						console.timeEnd("Time this")
+						end= Date.now()
+						var timeSpent=(end-begin);
+						progressTime('phase 2', timeSpent);
+
+						modelLoaded = true;
+						loadingInProcess = false;
+			}, onProgress, onError);
+
+		}
+
+	})
 }
 
 
