@@ -3,18 +3,28 @@
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	<title>MODEL 06</title>
 	<!-- include three.js library -->
-	<script src='js/three.js'></script>
+	<!-- <script src='js/three.js'></script>
 	<script src='js/OBJLoader.js'></script>
-	<script src='js/MTLLoader.js'></script>
+	<script src='js/MTLLoader.js'></script> -->
+
 	<!-- include jsartookit -->
-	<script src="jsartoolkit5/artoolkit.min.js"></script>
-	<script src="jsartoolkit5/artoolkit.api.js"></script>
+	<!-- <script src="jsartoolkit5/artoolkit.min.js"></script>
+	<script src="jsartoolkit5/artoolkit.api.js"></script> -->
+
 	<!-- include threex.artoolkit -->
-	<script src="threex/threex-artoolkitsource.js"></script>
+	<!-- <script src="threex/threex-artoolkitsource.js"></script>
 	<script src="threex/threex-artoolkitcontext.js"></script>
 	<script src="threex/threex-arbasecontrols.js"></script>
-	<script src="threex/threex-armarkercontrols.js"></script>
+	<script src="threex/threex-armarkercontrols.js"></script> -->
+
 	<link rel=stylesheet href="css/progress.css"/>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r86/three.min.js"></script> -->
+	<!-- <script src="https://rawcdn.githack.com/mrdoob/three.js/r86/examples/js/loaders/GLTFLoader.js"></script> -->
+	
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r126/three.min.js"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r126/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r126/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.1/three.js/build/ar.js"></script>
 </head>
 
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
@@ -32,6 +42,10 @@
 			<div class="label" id="phase 2 label">0ms</div>
 		</div>  
 	</div>
+
+	<footer>
+		<div id="marker_label">Marker Not Found</div>
+	</footer>
 
 <script>
 
@@ -141,31 +155,50 @@ function initialize()
 		console.log( 'An error happened' ); 
 		progress('phase 1', 'An error happened');     
      }
-	var begin=Date.now();
-	var end;
 	
 	console.time("Time this");
-	new THREE.MTLLoader()
-		.setPath( 'https://finalar.github.io/models/semi_truck/' )
-		.load( 'Blank.mtl', function ( materials ) {
-			materials.preload();
-			new THREE.OBJLoader()
-				.setMaterials( materials )
-				.setPath( 'https://finalar.github.io/models/semi_truck/' )
-				.load( '18550_Semi_Truck w_Trailer_wheel_v1_NEW.obj', function ( group ) {
-					mesh0 = group.children[0];
-					mesh0.material.side = THREE.DoubleSide;
-					mesh0.position.y = 1.0;
-					mesh0.scale.set(0.50,0.50,0.50);
-					markerRoot1.add(mesh0);
-					console.timeEnd("Time this")
-					end= Date.now()
-					var timeSpent=(end-begin);
-	                progressTime('phase 2', timeSpent);
+	let model = null;
+	var modelLoaded = false; // Flag to track if the model has been loaded
+	var loadingInProcess = false;
 
+	markerControls1.addEventListener("markerFound", function(ev){
+        console.log("markerFound...");
+		document.getElementById("marker_label").innerHTML = 'Marker Found';
+		var begin = Date.now();
+		var end;
 
-				}, onProgress, onError );
-		});
+		if (!modelLoaded && !loadingInProcess) {
+		loadingInProcess = true;
+		
+		let texture = new THREE.TextureLoader().load('https://followthedarkside.github.io/arjs-image-tracking-sample/resources/Map-COL.jpg');
+		
+		const GFloader = new THREE.GLTFLoader();
+
+		GFloader.load( 'https://followthedarkside.github.io/arjs-image-tracking-sample/resources/LeePerrySmith.glb', function ( gltf ) {
+						model = gltf.scene;
+						model.name = "model-face";
+
+						gltf.scene.traverse( function ( child ) {
+							if ( child.isMesh ) {
+								console.log("isMesh...");
+								child.material.map = texture;
+							}
+						});
+						model.position.y = 1;
+						model.scale.set(0.3,0.3,0.3);
+						markerRoot1.add(model);
+						console.timeEnd("Time this")
+						end= Date.now()
+						var timeSpent=(end-begin);
+						progressTime('phase 2', timeSpent);
+
+						modelLoaded = true;
+						loadingInProcess = false;
+			}, onProgress, onError);
+
+		}
+
+	})
 }
 
 

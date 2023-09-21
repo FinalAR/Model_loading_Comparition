@@ -2,26 +2,28 @@
 
 <head>
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<title>IT LOD MODELS</title>
+	<title>NFT LOD MODELS</title>
 	<!-- include three.js library -->
-	<script src='https://finalar.github.io/js/three.js' crossOrigin="anonymous"></script>
+	<!-- <script src='https://finalar.github.io/js/three.js' crossOrigin="anonymous"></script>
 	<script src='https://finalar.github.io/js/OBJLoader.js'></script>
-	<script src='https://finalar.github.io/js/MTLLoader.js'></script>
+	<script src='https://finalar.github.io/js/MTLLoader.js'></script> -->
 	<!-- include jsartookit -->
-	<script src="jsartoolkit5/artoolkit.min.js"></script>
-	<script src="jsartoolkit5/artoolkit.api.js"></script>
+	<!-- <script src="jsartoolkit5/artoolkit.min.js"></script>
+	<script src="jsartoolkit5/artoolkit.api.js"></script> -->
 	<!-- include threex.artoolkit -->
-	<script src="threex/threex-artoolkitsource.js"></script>
+	<!-- <script src="threex/threex-artoolkitsource.js"></script>
 	<script src="threex/threex-artoolkitcontext.js"></script>
 	<script src="threex/threex-arbasecontrols.js"></script>
-	<script src="threex/threex-armarkercontrols.js"></script>
+	<script src="threex/threex-armarkercontrols.js"></script> -->
 	<link rel=stylesheet href="css/progress.css" />
 	<link rel=stylesheet href="css/navBar.css" />
 	<link rel=stylesheet href="css/popup.css" />
 	<!-- <script src="./js/ar-nft.js"></script> -->
 	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script> -->
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r126/three.min.js"></script> -->
-    <!-- <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r126/examples/js/loaders/GLTFLoader.js"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r126/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r126/examples/js/loaders/GLTFLoader.js"></script>
+	<script src="https://raw.githack.com/AR-js-org/AR.js/3.3.1/three.js/build/ar.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.1/three.js/build/ar-nft.js"></script>
 	<!-- <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script> -->
 </head>
 
@@ -84,56 +86,45 @@
 		var markerRoot1;
 
 		var mesh1;
+		let nftName = "ramen-1000px";
 
 		// Usage example for different targets
 		const targetInfo1 = {
-			// patternUrl: "https://followthedarkside.github.io/arjs-image-tracking-sample/resources/nft/" + nftName,
+			// nftUrl: "https://followthedarkside.github.io/arjs-image-tracking-sample/resources/nft/" + nftName,
 			meshColor: 0x0000ff,
-			modelPath: 'https://finalar.github.io/models/gun/H/',
-			modelFile: 'gun.obj',
+			modelPath: 'https://finalar.github.io/models/chess/H/',
+			modelFile: 'Chess01.glb',
 			progressPhase: 'phase 2',
-			mappingPath: 'https://finalar.github.io/models/gun/H/',
-			mappingFile: 'gun.mtl',
-			positionY: 0.50,
-			scaleSet: 0.25
+			mappingPath: 'https://finalar.github.io/models/chess/',
+			mappingFile: 'board.jpg',
+			positionY: 0.05,
+			scaleSet: 0.01
 		};
 
 		const targetInfo2 = {
 			// nftUrl: "https://followthedarkside.github.io/arjs-image-tracking-sample/resources/nft/" + nftName,
 			meshColor: 0xff0000,
-			modelPath: 'https://finalar.github.io/models/gun/M/',
-			modelFile: 'gun.obj',
+			modelPath: 'https://finalar.github.io/models/chess/M/',
+			modelFile: 'Chess01.glb',
 			progressPhase: 'phase 2',
-			mappingPath: 'https://finalar.github.io/models/gun/M/',
-			mappingFile: 'gun.mtl',
-			positionY: 0.50,
-			scaleSet: 0.25
+			mappingPath: 'https://finalar.github.io/models/chess/',
+			mappingFile: 'board.jpg',
+			positionY: 0.25,
+			scaleSet: 0.50
 		};
 
 		const targetInfo3 = {
 			// nftUrl: "https://followthedarkside.github.io/arjs-image-tracking-sample/resources/nft/" + nftName,
 			meshColor: 0xff0000,
-			modelPath: 'https://finalar.github.io/models/gun/L/',
-			modelFile: 'gun.obj',
+			modelPath: 'https://finalar.github.io/models/chess/L/',
+			modelFile: 'Chess01.glb',
 			progressPhase: 'phase 2',
-			mappingPath: 'https://finalar.github.io/models/gun/L/',
-			mappingFile: 'gun.mtl',
-			positionY: 0.50,
-			scaleSet: 0.25
-		};
-
-
-		const targetInfo4 = {
-			patternUrl: "https://finalar.github.io/data/kanji.patt",
-			meshColor: 0xff0000,
-			modelPath: 'https://finalar.github.io/models/Pirate/',
-			modelFile: 'Pirate.obj',
-			progressPhase: 'phase 2',
-			mappingPath: 'https://finalar.github.io/models/Pirate/',
-			mappingFile: 'Pirate.mtl',
+			mappingPath: 'https://finalar.github.io/models/chess/',
+			mappingFile: 'board.jpg',
 			positionY: 0.25,
-			scaleSet: 0.50
+			scaleSet: 50
 		};
+
 
 		initialize(targetInfo3);
 		//initialize(targetInfo2);
@@ -144,12 +135,12 @@
 
 		function initialize(targetInfo) {
 
-			// let width  = 640;
-    		// let height = 480;
-			// let windowWidth  = window.innerWidth;
-			// let windowHeight = window.innerHeight;
+			let width  = 640;
+    		let height = 480;
+			let windowWidth  = window.innerWidth;
+			let windowHeight = window.innerHeight;
 
-			// console.log("window-size:", windowWidth, windowHeight);
+			console.log("window-size:", windowWidth, windowHeight);
 
 
 			scene = new THREE.Scene();
@@ -163,12 +154,13 @@
 			renderer = new THREE.WebGLRenderer({
 				antialias: true,
 				alpha: true,
-				// precision: 'mediump',
+				precision: 'mediump',
+				logarithmicDepthBuffer: true, // Enable logarithmic depth buffer
 			});
 			
-			// renderer.setPixelRatio(window.devicePixelRatio);
+			renderer.setPixelRatio(window.devicePixelRatio);
 			renderer.setClearColor(new THREE.Color('lightgrey'), 0)
-			renderer.setSize(640, 480);
+			renderer.setSize( windowWidth, windowHeight );
 			renderer.domElement.style.position = 'absolute'
 			renderer.domElement.style.top = '0px'
 			renderer.domElement.style.left = '0px'
@@ -186,15 +178,17 @@
 				sourceType: 'webcam',
 
 				// resolution of at which we initialize in the source image
-				// sourceWidth: width,
-				// sourceHeight: height,
+				sourceWidth: width,
+				sourceHeight: height,
 			});
 
 			function onResize() {
-				// windowHeight = window.innerHeight;
-				// console.log("window-size:", windowWidth, windowHeight);
-				// renderer.setPixelRatio(window.devicePixelRatio);
-				// renderer.setSize(windowWidth, windowHeight);
+				windowWidth  = window.innerWidth;
+				windowHeight = window.innerHeight;
+				console.log("window-size:", windowWidth, windowHeight);
+				renderer.setPixelRatio(window.devicePixelRatio);
+				renderer.setSize(windowWidth, windowHeight);
+
 				arToolkitSource.onResize()
 				arToolkitSource.copySizeTo(renderer.domElement)
 				if (arToolkitContext.arController !== null) {
@@ -223,11 +217,11 @@
 
 			// create atToolkitContext
 			arToolkitContext = new THREEx.ArToolkitContext({
-				cameraParametersUrl: 'https://finalar.github.io/data/camera_para.dat',
+				//cameraParametersUrl: 'https://finalar.github.io/data/camera_para.dat',
 				detectionMode: 'mono',
 				// resolution of at which we detect pose in the source image
-				//canvasWidth: width,
-				//canvasHeight: height,
+				canvasWidth: width,
+				canvasHeight: height,
 			});
 
 			// copy projection matrix to camera when initialization complete
@@ -245,19 +239,27 @@
 			markerRoot = new THREE.Group();
 			scene.add(markerRoot);
 
+			let nftName = "chess_1000x666";
+			//let nftUrl  = "../resources/nft/" + nftName; // for local test
+			let nftUrl  = "https://finalar.github.io/markers/nft/c5/chess/" + nftName;
 
-			let markerControls = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
-				type: 'pattern', 
-				patternUrl: "https://finalar.github.io/data/hiro.patt",
+
+			let markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
+				type : 'nft',
+        		descriptorsUrl : nftUrl,
+        		changeMatrixMode: 'cameraTransformMatrix'
 			});
-
 
 			let geometry = new THREE.PlaneBufferGeometry(1, 1, 4, 4);
 			let material = new THREE.MeshBasicMaterial({ color: targetInfo.meshColor, opacity: 0.5 });
 			let mesh = new THREE.Mesh(geometry, material);
 			mesh.rotation.x = -Math.PI / 2;
 			markerRoot.add(mesh);
-					
+			
+			scene.visible = false
+
+			let model = null;
+			
 			var modelLoaded = false; // Flag to track if the model has been loaded
 			var loadingInProcess = false;
 			markerControls.addEventListener("markerFound", function (ev) {
@@ -269,19 +271,28 @@
 				if (!modelLoaded && !loadingInProcess) {
 					loadingInProcess = true;
 					console.time("Time this");
-					new THREE.MTLLoader()
+					new THREE.TextureLoader()
 						.setPath(targetInfo.mappingPath) // Use the modelPath from targetInfo
 						.load(targetInfo.mappingFile, function (materials) {
-							materials.preload();
-							new THREE.OBJLoader()
-								.setMaterials(materials)
+							// materials.preload();
+							new THREE.GLTFLoader()
+								// .setMaterials(materials)
 								.setPath(targetInfo.modelPath)
 								.load(targetInfo.modelFile, function (group) {
-									mesh0 = group.children[0];
-									mesh0.material.side = THREE.DoubleSide;
+									mesh0 = group.scene;
+									group.scene.traverse( function ( child ) {
+										if ( child.isMesh ) {
+											console.log("isMesh...");
+											child.material.map = materials;
+										}
+									});
+									
 									mesh0.position.y = targetInfo.positionY;
 									mesh0.scale.set(targetInfo.scaleSet, targetInfo.scaleSet, targetInfo.scaleSet);
+						
 									markerRoot.add(mesh0);
+									scene.visible = true
+
 									console.timeEnd("Time this");
 									end = Date.now();
 									var timeSpent = (end - begin);
@@ -292,6 +303,7 @@
 									loadingInProcess = false;
 								}, onProgress, onError);
 						});
+				
 				}
 			})
 

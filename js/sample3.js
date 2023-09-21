@@ -22,14 +22,19 @@ function init() {
         antialias: true,
         alpha: true,
         precision: 'mediump',
+        logarithmicDepthBuffer: true, // Enable logarithmic depth buffer
     });
 
+  
+    renderer.setClearColor(new THREE.Color('lightgrey'), 0);
+
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setClearColor(new THREE.Color('lightgrey'), 0)
     renderer.setSize( windowWidth, windowHeight );
+
     renderer.domElement.style.position = 'absolute'
     renderer.domElement.style.top = '0px'
     renderer.domElement.style.left = '0px'
+
     document.body.appendChild( renderer.domElement );
 
     // Init for three.js
@@ -62,7 +67,7 @@ function init() {
         setTimeout(function() {
             onResize();
         }, 1000);
-        //onResize();
+        onResize();
     })
 
     // Handle resize
@@ -129,7 +134,7 @@ function init() {
     console.log("initialize arToolkitContext...")
     arToolkitContext.init(function onCompleted(){
         // copy projection matrix to camera
-        console.log("copy projection matrix to camera...")
+        // console.log("copy projection matrix to camera...")
         camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
     })
 
@@ -159,22 +164,22 @@ function init() {
     scene.visible = false
 
     // Init display object
-    let texture = new THREE.TextureLoader().load('https://finalar.github.io/models/ironMan/H/Textures/');
+    let texture = new THREE.TextureLoader().load('https://finalar.github.io/models/room/dummy.jpeg');
     let model = null;
     const loader = new THREE.GLTFLoader();
     loader.load(
         // resource URL
         //"../resources/LeePerrySmith.glb",
-        "https://finalar.github.io/models/ironMan/H/IronMan.glb",
+        "https://finalar.github.io/models/room/room.glb",
         
         // called when the resource is loaded
         function ( gltf ){
             model = gltf.scene;
-            model.name = "model-face";
+            model.name = "model-room";
 
-            // setObjectPosition();
-            // setObjectScale();
-            // setObjectRotation();
+            setObjectPosition();
+            setObjectScale();
+            setObjectRotation();
 
             // Set texture and
             gltf.scene.traverse( function ( child ) {
@@ -183,9 +188,10 @@ function init() {
                     child.material.map = texture;
                 }
             });
-            model.scale.set(10,10,10);
+            // model.position.y = 5;
+            // model.scale.set(10,10,10);
             scene.add( model );
-            scene.visible = true
+            // scene.visible = true
         },
         // called while loading is progressing
         function ( xhr ) {
@@ -199,27 +205,27 @@ function init() {
     );
 
     // Init GUI by dat.gui
-    // console.log("init gui...")
-    // var guiCtrl = function(){
-    //     this.posX = 0;
-    //     this.posY = 0;
-    //     this.posZ = 0;
-    //     this.scaleX = 100;
-    //     this.scaleY = 100;
-    //     this.scaleZ = 100;
-    //     this.rotateX = 0;
-    //     this.rotateY = 0;
-    //     this.rotateZ = 0;
-    //     // this.reset = function(){
-    //     //     console.log("reset object...");
-    //     //     // model.position.set(0, 0, 0);
-    //     //     // model.scale.set(100, 100, 1);
-    //     //     // model.rotation.set(0, 0, 0);
-    //     // };
-    //     this.resize = function(){
-    //         onResize()
-    //     };
-    // };
+    console.log("init gui...")
+    var guiCtrl = function(){
+        this.posX = 0;
+        this.posY = 0;
+        this.posZ = 0;
+        this.scaleX = 100;
+        this.scaleY = 100;
+        this.scaleZ = 100;
+        this.rotateX = 0;
+        this.rotateY = 0;
+        this.rotateZ = 0;
+        // this.reset = function(){
+        //     console.log("reset object...");
+        //     // model.position.set(0, 0, 0);
+        //     // model.scale.set(100, 100, 1);
+        //     // model.rotation.set(0, 0, 0);
+        // };
+        this.resize = function(){
+            onResize()
+        };
+    };
     
     // gui = new dat.GUI();
     // guiObj = new guiCtrl();
@@ -246,6 +252,16 @@ function init() {
     // function setObjectRotation(){
     //     model.rotation.set(guiObj.rotateX, guiObj.rotateY, guiObj.rotateZ);
     // }
+
+    function setObjectPosition(){
+        model.position.set(0, 0, 0);
+    }
+    function setObjectScale(){
+        model.scale.set(50, 50, 50);
+    }
+    function setObjectRotation(){
+        model.rotation.set(0, 0, 0);
+    }
 
     // for render
     var animate = function() {

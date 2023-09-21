@@ -22,6 +22,7 @@ function init() {
         antialias: true,
         alpha: true,
         precision: 'mediump',
+        logarithmicDepthBuffer: true, // Enable logarithmic depth buffer
     });
 
     renderer.setPixelRatio(window.devicePixelRatio);
@@ -182,7 +183,7 @@ function init() {
                     child.material.map = texture;
                 }
             });
-
+            
             scene.add( model );
         },
         // called while loading is progressing
@@ -208,41 +209,51 @@ function init() {
         this.rotateX = 0;
         this.rotateY = 0;
         this.rotateZ = 0;
-        // this.reset = function(){
-        //     console.log("reset object...");
-        //     // model.position.set(0, 0, 0);
-        //     // model.scale.set(100, 100, 1);
-        //     // model.rotation.set(0, 0, 0);
-        // };
+        this.reset = function(){
+            console.log("reset object...");
+            model.position.set(0, 0, 0);
+            model.scale.set(100, 100, 1);
+            model.rotation.set(0, 0, 0);
+        };
         this.resize = function(){
             onResize()
         };
     };
     
-    gui = new dat.GUI();
-    guiObj = new guiCtrl();
-    var folder = gui.addFolder('Folder');
-    folder.add( guiObj, 'posX', -500, 500 ).onChange(setObjectPosition);
-    folder.add( guiObj, 'posY', -500, 500 ).onChange(setObjectPosition);
-    folder.add( guiObj, 'posZ', -500, 500 ).onChange(setObjectPosition);
-    folder.add( guiObj, 'scaleX', 0, 500 ).onChange(setObjectScale);
-    folder.add( guiObj, 'scaleY', 0, 500 ).onChange(setObjectScale);
-    folder.add( guiObj, 'scaleZ', 0, 500 ).onChange(setObjectScale);
-    folder.add( guiObj, 'rotateX', 0, 2*Math.PI ).onChange(setObjectRotation);
-    folder.add( guiObj, 'rotateY', 0, 2*Math.PI ).onChange(setObjectRotation);
-    folder.add( guiObj, 'rotateZ', 0, 2*Math.PI ).onChange(setObjectRotation);
+    // gui = new dat.GUI();
+    // guiObj = new guiCtrl();
+    // var folder = gui.addFolder('Folder');
+    // folder.add( guiObj, 'posX', -500, 500 ).onChange(setObjectPosition);
+    // folder.add( guiObj, 'posY', -500, 500 ).onChange(setObjectPosition);
+    // folder.add( guiObj, 'posZ', -500, 500 ).onChange(setObjectPosition);
+    // folder.add( guiObj, 'scaleX', 0, 500 ).onChange(setObjectScale);
+    // folder.add( guiObj, 'scaleY', 0, 500 ).onChange(setObjectScale);
+    // folder.add( guiObj, 'scaleZ', 0, 500 ).onChange(setObjectScale);
+    // folder.add( guiObj, 'rotateX', 0, 2*Math.PI ).onChange(setObjectRotation);
+    // folder.add( guiObj, 'rotateY', 0, 2*Math.PI ).onChange(setObjectRotation);
+    // folder.add( guiObj, 'rotateZ', 0, 2*Math.PI ).onChange(setObjectRotation);
     // folder.add( guiObj, 'reset' );
-    folder.add( guiObj, 'resize' );
-    folder.open();
+    // folder.add( guiObj, 'resize' );
+    // folder.open();
+
+    // function setObjectPosition(){
+    //     model.position.set(guiObj.posX, guiObj.posY, guiObj.posZ);
+    // }
+    // function setObjectScale(){
+    //     model.scale.set(guiObj.scaleX, guiObj.scaleY, guiObj.scaleZ);
+    // }
+    // function setObjectRotation(){
+    //     model.rotation.set(guiObj.rotateX, guiObj.rotateY, guiObj.rotateZ);
+    // }
 
     function setObjectPosition(){
-        model.position.set(guiObj.posX, guiObj.posY, guiObj.posZ);
+        model.position.set(0, 0, 0);
     }
     function setObjectScale(){
-        model.scale.set(guiObj.scaleX, guiObj.scaleY, guiObj.scaleZ);
+        model.scale.set(100, 100, 100);
     }
     function setObjectRotation(){
-        model.rotation.set(guiObj.rotateX, guiObj.rotateY, guiObj.rotateZ);
+        model.rotation.set(0, 0, 0);
     }
 
     // for render
