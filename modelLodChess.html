@@ -280,12 +280,12 @@
 								.setPath(targetInfo.modelPath)
 								.load(targetInfo.modelFile, function (group) {
 									mesh0 = group.scene;
-									group.scene.traverse( function ( child ) {
-										if ( child.isMesh ) {
-											console.log("isMesh...");
-											child.material.map = materials;
-										}
-									});
+									// group.scene.traverse( function ( child ) {
+									// 	if ( child.isMesh ) {
+									// 		console.log("isMesh...");
+									// 		child.material.map = materials;
+									// 	}
+									// });
 									
 									mesh0.position.y = targetInfo.positionY;
 									mesh0.scale.set(targetInfo.scaleSet, targetInfo.scaleSet, targetInfo.scaleSet);

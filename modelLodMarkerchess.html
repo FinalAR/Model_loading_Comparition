@@ -22,7 +22,7 @@
 	<script src="./js/ar.js"></script>
 	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script> -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r126/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r126/examples/js/loaders/GLTFLoader.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r126/examples/js/loaders/GLTFLoader.js"></script>
 	<!-- <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.1/three.js/build/ar.js"></script> -->
 	<!-- <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script> -->
 </head>
@@ -176,9 +176,11 @@
 
 		function initialize(targetInfo) {
 
-			let width  = 640;
-    		let height = 480;
-			let windowWidth  = window.innerWidth;
+			
+
+			let width = 640;
+			let height = 480;
+			let windowWidth = window.innerWidth;
 			let windowHeight = window.innerHeight;
 
 			// console.log("window-size:", windowWidth, windowHeight);
@@ -186,9 +188,9 @@
 			console.log("markerLost...");
 			document.getElementById("marker_label").innerHTML = 'Marker Lost';
 
-
 			scene = new THREE.Scene();
 
+		
 			let ambientLight = new THREE.AmbientLight(0xcccccc, 1.0);
 			scene.add(ambientLight);
 
@@ -200,7 +202,7 @@
 				alpha: true,
 				precision: 'mediump',
 			});
-			
+
 			// renderer.setPixelRatio(window.devicePixelRatio);
 			renderer.setClearColor(new THREE.Color('lightgrey'), 0)
 			renderer.setSize(640, 480);
@@ -278,11 +280,12 @@
 
 			// build markerControls
 			markerRoot = new THREE.Group();
+			clearScene(markerRoot);
 			scene.add(markerRoot);
 
 
 			let markerControls = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
-				type: 'pattern', 
+				type: 'pattern',
 				patternUrl: "https://finalar.github.io/data/hiro.patt",
 			});
 
@@ -292,7 +295,7 @@
 			let mesh = new THREE.Mesh(geometry, material);
 			mesh.rotation.x = -Math.PI / 2;
 			markerRoot.add(mesh);
-					
+
 			var modelLoaded = false; // Flag to track if the model has been loaded
 			var loadingInProcess = false;
 			markerControls.addEventListener("markerFound", function (ev) {
@@ -306,25 +309,25 @@
 					console.time("Time this");
 					new THREE.TextureLoader()
 						// .setPath(targetInfo.mappingPath) // Use the modelPath from targetInfo
-						.load(targetInfo.mappingPath+targetInfo.mappingFile, function (materials) {
+						.load(targetInfo.mappingPath + targetInfo.mappingFile, function (materials) {
 
 							// materials.preload();
 							new THREE.GLTFLoader()
 								// .setMaterials(materials)
 								// .setPath(targetInfo.modelPath)
-								.load(targetInfo.modelPath+targetInfo.modelFile, function (group) {
+								.load(targetInfo.modelPath + targetInfo.modelFile, function (group) {
 									mesh0 = group.scene;
-									if(material!=null)
-									group.scene.traverse( function ( child ) {
-										if ( child.isMesh ) {
-											console.log("isMesh...");
-											child.material.map = materials;
-										}
-									});
-									
-									mesh0.position.y = targetInfo.positionY;
+									if (material != null)
+										// group.scene.traverse( function ( child ) {
+										// 	if ( child.isMesh ) {
+										// 		console.log("isMesh...");
+										// 		child.material.map = materials;
+										// 	}
+										// });
+
+										mesh0.position.y = targetInfo.positionY;
 									mesh0.scale.set(targetInfo.scaleSet, targetInfo.scaleSet, targetInfo.scaleSet);
-						
+
 									markerRoot.add(mesh0);
 									scene.visible = true
 
@@ -338,7 +341,7 @@
 									loadingInProcess = false;
 								}, onProgress, onError);
 						});
-				
+
 				}
 			})
 
@@ -389,8 +392,6 @@
 			update();
 			//scene.visible =markerRoot.visible;
 			render();
-
-
 		}
 		//Prgress Loading Function
 		function progress(phase, percentage) {
@@ -413,6 +414,12 @@
 			elem.style.width = '100%';
 			document.getElementById(phase + " label").innerHTML = Math.floor(duration) + 'ms' + ' -->' + Math.floor(duration / 1000) + 's';
 			console.log("Progress duration: " + duration);
+		}
+
+		function clearScene(scene) {
+			scene.children.forEach((child) => {
+				scene.remove(child);
+			});
 		}
 
 	</script>
