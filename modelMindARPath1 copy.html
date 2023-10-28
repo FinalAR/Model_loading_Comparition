@@ -33,7 +33,7 @@
 		const targetInfo1 = {
 			meshColor: 0x0000ff,
 			modelPath: 'https://finalar.github.io/models/SurveySet/',
-			modelFile: 'Chess3.glb',
+			modelFile: 'FoodPackD.glb',
 			progressPhase: 'phase 2',
 			positionY: 2,
 			scaleSet: 5
@@ -42,7 +42,7 @@
 		const targetInfo2 = {
 			meshColor: 0x0000ff,
 			modelPath: 'https://finalar.github.io/models/SurveySet/',
-			modelFile: 'DodgeChallnger.glb',
+			modelFile: 'Ironman.glb',
 			progressPhase: 'phase 2',
 			positionY: 1,
 			scaleSet: 1
@@ -51,7 +51,7 @@
 		const targetInfo3 = {
 			meshColor: 0x0000ff,
 			modelPath: 'https://finalar.github.io/models/SurveySet/',
-			modelFile: 'FoodPack.glb',
+			modelFile: 'DodgeChallnger.glb',
 			progressPhase: 'phase 2',
 			positionY: 1,
 			scaleSet: 1
@@ -61,7 +61,16 @@
 		const targetInfo4 = {
 			meshColor: 0x0000ff,
 			modelPath: 'https://finalar.github.io/models/SurveySet/',
-			modelFile: 'Ironman.glb',
+			modelFile: 'Prime.glb',
+			progressPhase: 'phase 2',
+			positionY: 1,
+			scaleSet: 0.1
+		};
+
+		const targetInfo5 = {
+			meshColor: 0x0000ff,
+			modelPath: 'https://finalar.github.io/models/SurveySet/',
+			modelFile: 'Mercedes.glb',
 			progressPhase: 'phase 2',
 			positionY: 1,
 			scaleSet: 0.1
@@ -85,7 +94,7 @@
 		///////////////// Marker 0 -> targetInfo1 /////////////////
 		///////////////////////////////////////////////////////////
 
-		const markerRoot = mindarThree.addAnchor(0);
+		const markerRoot = mindarThree.addAnchor(2);
 
 
 		//const geometry = new THREE.PlaneGeometry(1, 0.55);
@@ -178,7 +187,7 @@
 		///////////////// Marker 1 -> targetInfo2 /////////////////
 		///////////////////////////////////////////////////////////
 
-		const markerRoot1 = mindarThree.addAnchor(1);
+		const markerRoot1 = mindarThree.addAnchor(4);
 
 		markerRoot1.group.add(plane);
 
@@ -264,7 +273,7 @@
 		///////////////// Marker 2 -> targetInfo3 /////////////////
 		///////////////////////////////////////////////////////////
 
-		const markerRoot2 = mindarThree.addAnchor(2);
+		const markerRoot2 = mindarThree.addAnchor(1);
 
 		markerRoot2.group.add(plane);
 
@@ -348,11 +357,10 @@
 		///////////////////////////////////////////////////////////
 
 		///////////////////////////////////////////////////////////
-		///////////////////////////////////////////////////////////
 		///////////////// Marker 3 -> targetInfo4 /////////////////
 		///////////////////////////////////////////////////////////
 
-		const markerRoot3 = mindarThree.addAnchor(4);
+		const markerRoot3 = mindarThree.addAnchor(8);
 
 		markerRoot3.group.add(plane);
 
@@ -363,7 +371,7 @@
 
 		markerRoot3.onTargetFound = () => {
 			console.log("markerFound...");
-			progressTime(targetInfo3.progressPhase, 0);
+			progressTime(targetInfo4.progressPhase, 0);
 
 
 			document.getElementById("marker_label").innerHTML = 'Marker Found';
@@ -380,7 +388,7 @@
 				loader.load(targetInfo4.modelPath + targetInfo4.modelFile, function (gltf) {
 					mesh0 = gltf.scene;
 					mesh0.rotation.x = Math.PI / 2;
-					mesh0.position.y = targetInfo2.positionY;
+					mesh0.position.y = targetInfo4.positionY;
 					mesh0.scale.set(targetInfo4.scaleSet, targetInfo4.scaleSet, targetInfo4.scaleSet);
 					markerRoot3.group.add(mesh0);
 
@@ -435,7 +443,93 @@
 
 		///////////////////////////////////////////////////////////
 
+		///////////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////
+		///////////////// Marker 4 -> targetInfo5 /////////////////
+		///////////////////////////////////////////////////////////
 
+		const markerRoot4 = mindarThree.addAnchor(6);
+
+		markerRoot4.group.add(plane);
+
+		let model4 = null;
+
+		var modelLoaded4 = false; // Flag to track if the model has been loaded
+		var loadingInProcess4 = false;
+
+		markerRoot4.onTargetFound = () => {
+			console.log("markerFound...");
+			progressTime(targetInfo5.progressPhase, 0);
+
+
+			document.getElementById("marker_label").innerHTML = 'Marker Found';
+
+			var begin = Date.now();
+			var end;
+			let mesh0;
+
+			if (!modelLoaded4 && !loadingInProcess4) {
+				loadingInProcess4 = true;
+				console.time("Time this");
+				let loader = new GLTFLoader();
+
+				loader.load(targetInfo5.modelPath + targetInfo5.modelFile, function (gltf) {
+					mesh0 = gltf.scene;
+					mesh0.rotation.x = Math.PI / 2;
+					mesh0.position.y = targetInfo5.positionY;
+					mesh0.scale.set(targetInfo5.scaleSet, targetInfo5.scaleSet, targetInfo5.scaleSet);
+					markerRoot4.group.add(mesh0);
+
+					console.timeEnd("Time this");
+					end = Date.now();
+					var timeSpent = (end - begin);
+					progressTime(targetInfo5.progressPhase, timeSpent);
+
+					// Set the modelLoaded flag to true once the model is loaded
+					modelLoaded4 = true;
+					loadingInProcess4 = false;
+
+				}, onProgress, onError);
+			}
+
+
+			// function onProgress(xhr) {
+			// 	console.log(xhr);
+			// 	console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+			// 	progress('phase 1', xhr.loaded / xhr.total * 100);
+			// }
+
+			function onProgress(xhr) {
+				console.log(xhr);
+
+				if (xhr.total > 0) {
+					console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+					progress('phase 1', xhr.loaded / xhr.total * 100);
+				} else {
+					console.log('Total size is 0; unable to calculate percentage.');
+					progressBug('phase 1');
+				}
+			}
+
+			function onError(xhr) {
+				console.log('An error happened');
+				progress('phase 1', 'An error happened');
+			}
+		}
+
+		markerRoot4.onTargetLost = () => {
+			console.log("Marker Lost...");
+
+			document.getElementById("marker_label").innerHTML = 'Marker Lost';
+
+			progress('phase 1', 0);
+
+			const phase2Label = document.getElementById("phase 2 label");
+			phase2Label.textContent += ": Previous log";
+
+		}
+
+		///////////////////////////////////////////////////////////
 		const start = async () => {
 			await mindarThree.start();
 			renderer.setAnimationLoop(() => {
@@ -532,12 +626,14 @@
 </head>
 
 <body>
-	<div id="control">
-		<button id="startButton">Start</button>
-		<button id="stopButton">Stop</button>
-	</div>
+
 
 	<div id="container">
+		<div id="control">
+			<button id="startButton" class="btn6">Start</button>
+			<button id="stopButton" class="btn6">Stop</button>
+		</div>
+
 		<div class="progress">
 			<div class='bar' id="phase 1">
 				<div class="label" id="phase 1 label">0%</div>
@@ -553,34 +649,6 @@
 				<div class="label" id="phase 2 label">0ms</div>
 			</div>
 		</div>
-
-		<nav class="main-menu">
-			<ul>
-				<li>
-					<a href="#">
-						<!-- <box-icon name='signal-3'></box-icon> -->
-						<!-- <i class="fa fa-home nav-icon"></i> -->
-						<span class="nav-text" onclick="initialize(targetInfo1)">M1</span>
-					</a>
-				</li>
-
-				<li>
-					<a href="#">
-						<!-- <box-icon name='signal-2' ></box-icon> -->
-						<!-- <i class="fa fa-image nav-icon"></i> -->
-						<span class="nav-text" onclick="initialize(targetInfo2)">M2</span>
-					</a>
-				</li>
-
-				<li>
-					<a href="#">
-						<!-- <box-icon name='signal-1'></box-icon> -->
-						<!-- <i class="fa fa-pen nav-icon"></i> -->
-						<span class="nav-text" onclick="initialize(targetInfo3)">M3</span>
-					</a>
-				</li>
-			</ul>
-		</nav>
 
 		<footer>
 			<div id="marker_label">Marker Not Found</div>
