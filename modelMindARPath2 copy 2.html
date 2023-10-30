@@ -30,12 +30,10 @@
     </script>
 	<script type="module">
 
-	let total;
-
 		function initialize(targetInfoGiven) {
 
 			const phase2Label = document.getElementById("phase 2 label");
-			phase2Label.innerHTML = "0ms";
+    		phase2Label.innerHTML = "0ms";
 
 			while (scene.children.length > 0) {
 				scene.remove(scene.children[0]);
@@ -63,7 +61,7 @@
 			var loadingInProcess = false;
 			var targetInfo = targetInfoGiven;
 			markerRoot.onTargetFound = () => {
-
+				
 
 				console.log("markerFound...");
 				progressTime(targetInfo.progressPhase, 0);
@@ -78,12 +76,9 @@
 				if (!modelLoaded && !loadingInProcess) {
 					loadingInProcess = true;
 					console.time("Time this");
-					let loader = new GLTFLoader();	
-
-					contentLenghtFinder(targetInfo);
-
-					total = targetInfo.size
+					let loader = new GLTFLoader();
 					
+
 					loader.load(targetInfo.modelPath + targetInfo.modelFile, function (gltf) {
 						mesh0 = gltf.scene;
 						mesh0.rotation.x = Math.PI / 2;
@@ -114,15 +109,11 @@
 					console.log(xhr);
 
 					if (xhr.total > 0) {
-						var percentage = (xhr.loaded / total * 100);
-						console.log(percentage + '% loaded');
-						progress('phase 1', percentage);
+						console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+						progress('phase 1', xhr.loaded / xhr.total * 100);
 					} else {
-						var percentage = (xhr.loaded / total * 100);
-						console.log(percentage + '% loaded');
-						progress('phase 1', percentage);
-						// console.log('Total size is 0; unable to calculate percentage.');
-						// progressBug('phase 1');
+						console.log('Total size is 0; unable to calculate percentage.');
+						progressBug('phase 1');
 					}
 				}
 
@@ -142,39 +133,6 @@
 			}
 
 			///////////////////////////////////////////////////////////
-
-			//Content Length Fixer 
-			function contentLenghtFinder(targetInfo) {
-				var xhrBefore = new XMLHttpRequest();
-				xhrBefore.open("HEAD", targetInfo.modelPath + targetInfo.modelFile, true);
-
-				
-
-				// Set a callback to handle the response
-				xhrBefore.onreadystatechange = function () {
-					if (xhrBefore.readyState == 4) {
-						if (xhrBefore.status == 200) {
-							// 'content-length' is available in the response headers
-							var contentLength = xhrBefore.getResponseHeader("content-length");
-							
-							if (contentLength) {
-								// Now that you have content length, you can proceed with loading
-								// total = contentLength;
-								console.log(contentLength);
-							} else {
-								console.log("Content-Length header not available.");
-								// Handle the case where 'content-length' is not provided.
-							}
-						} else {
-							console.log("Failed to retrieve the file information.");
-							// Handle HTTP error, e.g., file not found, server error, etc.
-						}
-					}
-				};
-
-				// Send the HEAD request
-				xhrBefore.send();
-			}
 		}
 
 		const targetInfo1 = {
@@ -183,8 +141,7 @@
 			modelFile: 'Chess.glb',
 			progressPhase: 'phase 2',
 			positionY: 2,
-			scaleSet: 0.5,
-			size:9727240 
+			scaleSet: 0.5
 		};
 
 		const targetInfo2 = {
@@ -193,8 +150,7 @@
 			modelFile: 'Chess4.glb',
 			progressPhase: 'phase 2',
 			positionY: 1,
-			scaleSet: 0.1,
-			size: 10812436
+			scaleSet: 0.1
 		};
 
 		const targetInfo3 = {
@@ -203,8 +159,7 @@
 			modelFile: 'Chess2.glb',
 			progressPhase: 'phase 2',
 			positionY: 1,
-			scaleSet: 1,
-			size:29382632
+			scaleSet: 1
 		};
 
 		document.addEventListener("DOMContentLoaded", function () {
@@ -219,7 +174,7 @@
 			});
 
 			button02.addEventListener("click", function () {
-				initialize(targetInfo2);
+				initialize(targetInfo2);	
 			});
 
 			button03.addEventListener("click", function () {
@@ -294,7 +249,6 @@
 			document.getElementById(phase + " label").innerHTML = Math.floor(duration) + 'ms' + ' -->' + Math.floor(duration / 1000) + 's';
 			console.log("Progress duration: " + duration);
 		}
-
 
 
 	</script>
@@ -374,7 +328,7 @@
 					<a href="#">
 						<!-- <box-icon name='signal-3'></box-icon> -->
 						<!-- <i class="fa fa-home nav-icon"></i> -->
-						<span class="nav-text" id="btn_1">M1 -9.5MB</span>
+						<span class="nav-text" id="btn_1" >M1 -9.5MB</span>
 					</a>
 				</li>
 
@@ -382,7 +336,7 @@
 					<a href="#">
 						<!-- <box-icon name='signal-2' ></box-icon> -->
 						<!-- <i class="fa fa-image nav-icon"></i> -->
-						<span class="nav-text" id="btn_2">M2 -10.5MB</span>
+						<span class="nav-text" id="btn_2" >M2 -10.5MB</span>
 					</a>
 				</li>
 
@@ -390,7 +344,7 @@
 					<a href="#">
 						<!-- <box-icon name='signal-1'></box-icon> -->
 						<!-- <i class="fa fa-pen nav-icon"></i> -->
-						<span class="nav-text" id="btn_3">M3 -28.7MB</span>
+						<span class="nav-text" id="btn_3" >M3 -28.7MB</span>
 					</a>
 				</li>
 			</ul>

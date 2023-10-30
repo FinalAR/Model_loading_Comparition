@@ -30,16 +30,13 @@
     </script>
 	<script type="module">
 
-	let total;
-
 		const targetInfo1 = {
 			meshColor: 0x0000ff,
 			modelPath: 'https://finalar.github.io/models/SurveySet/',
 			modelFile: 'FoodPackD.glb',
 			progressPhase: 'phase 2',
 			positionY: 1,
-			scaleSet: 1,
-			size: 11173332
+			scaleSet: 1
 		};
 
 		const targetInfo2 = {
@@ -48,8 +45,7 @@
 			modelFile: 'Ironman.glb',
 			progressPhase: 'phase 2',
 			positionY: 1,
-			scaleSet: 0.1,
-			size: 18233056 
+			scaleSet: 0.1
 		};
 
 		const targetInfo3 = {
@@ -58,8 +54,7 @@
 			modelFile: 'DodgeChallnger.glb',
 			progressPhase: 'phase 2',
 			positionY: 1,
-			scaleSet: 1,
-			size: 24981632
+			scaleSet: 1
 		};
 
 
@@ -68,9 +63,8 @@
 			modelPath: 'https://finalar.github.io/models/SurveySet/',
 			modelFile: 'Prime.glb',
 			progressPhase: 'phase 2',
-			positionY: 0,
-			scaleSet: 0.1,
-			size: 44004212
+			positionY: 1,
+			scaleSet: 0.1
 		};
 
 		const targetInfo5 = {
@@ -79,8 +73,7 @@
 			modelFile: 'Mercedes.glb',
 			progressPhase: 'phase 2',
 			positionY: 1,
-			scaleSet: 1,
-			size: 53559160
+			scaleSet: 1
 		};
 
 		import * as THREE from 'three';
@@ -135,8 +128,6 @@
 				console.time("Time this");
 				let loader = new GLTFLoader();
 
-				total = targetInfo1.size
-
 				loader.load(targetInfo1.modelPath + targetInfo1.modelFile, function (gltf) {
 					mesh0 = gltf.scene;
 					mesh0.rotation.x = Math.PI / 2;
@@ -164,20 +155,16 @@
 			// }
 
 			function onProgress(xhr) {
-					console.log(xhr);
+				console.log(xhr);
 
-					if (xhr.total > 0) {
-						var percentage = (xhr.loaded / total * 100);
-						console.log(percentage + '% loaded');
-						progress('phase 1', percentage);
-					} else {
-						var percentage = (xhr.loaded / total * 100);
-						console.log(percentage + '% loaded');
-						progress('phase 1', percentage);
-						// console.log('Total size is 0; unable to calculate percentage.');
-						// progressBug('phase 1');
-					}
+				if (xhr.total > 0) {
+					console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+					progress('phase 1', xhr.loaded / xhr.total * 100);
+				} else {
+					console.log('Total size is 0; unable to calculate percentage.');
+					progressBug('phase 1');
 				}
+			}
 
 			function onError(xhr) {
 				console.log('An error happened');
@@ -229,8 +216,6 @@
 				console.time("Time this");
 				let loader = new GLTFLoader();
 
-				total = targetInfo2.size
-				
 				loader.load(targetInfo2.modelPath + targetInfo2.modelFile, function (gltf) {
 					mesh0 = gltf.scene;
 					mesh0.rotation.x = Math.PI / 2;
@@ -258,20 +243,16 @@
 			// }
 
 			function onProgress(xhr) {
-					console.log(xhr);
+				console.log(xhr);
 
-					if (xhr.total > 0) {
-						var percentage = (xhr.loaded / total * 100);
-						console.log(percentage + '% loaded');
-						progress('phase 1', percentage);
-					} else {
-						var percentage = (xhr.loaded / total * 100);
-						console.log(percentage + '% loaded');
-						progress('phase 1', percentage);
-						// console.log('Total size is 0; unable to calculate percentage.');
-						// progressBug('phase 1');
-					}
+				if (xhr.total > 0) {
+					console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+					progress('phase 1', xhr.loaded / xhr.total * 100);
+				} else {
+					console.log('Total size is 0; unable to calculate percentage.');
+					progressBug('phase 1');
 				}
+			}
 
 			function onError(xhr) {
 				console.log('An error happened');
@@ -321,8 +302,6 @@
 				console.time("Time this");
 				let loader = new GLTFLoader();
 
-				total = targetInfo3.size
-				
 				loader.load(targetInfo3.modelPath + targetInfo3.modelFile, function (gltf) {
 					mesh0 = gltf.scene;
 					mesh0.rotation.x = Math.PI / 2;
@@ -350,20 +329,16 @@
 			// }
 
 			function onProgress(xhr) {
-					console.log(xhr);
+				console.log(xhr);
 
-					if (xhr.total > 0) {
-						var percentage = (xhr.loaded / total * 100);
-						console.log(percentage + '% loaded');
-						progress('phase 1', percentage);
-					} else {
-						var percentage = (xhr.loaded / total * 100);
-						console.log(percentage + '% loaded');
-						progress('phase 1', percentage);
-						// console.log('Total size is 0; unable to calculate percentage.');
-						// progressBug('phase 1');
-					}
+				if (xhr.total > 0) {
+					console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+					progress('phase 1', xhr.loaded / xhr.total * 100);
+				} else {
+					console.log('Total size is 0; unable to calculate percentage.');
+					progressBug('phase 1');
 				}
+			}
 
 			function onError(xhr) {
 				console.log('An error happened');
@@ -414,11 +389,9 @@
 				console.time("Time this");
 				let loader = new GLTFLoader();
 
-				total = targetInfo4.size
-				
 				loader.load(targetInfo4.modelPath + targetInfo4.modelFile, function (gltf) {
 					mesh0 = gltf.scene;
-					mesh0.rotation.x = Math.PI / ;
+					mesh0.rotation.x = Math.PI / 2;
 					mesh0.position.y = targetInfo4.positionY;
 					mesh0.scale.set(targetInfo4.scaleSet, targetInfo4.scaleSet, targetInfo4.scaleSet);
 					markerRoot3.group.add(mesh0);
@@ -443,20 +416,16 @@
 			// }
 
 			function onProgress(xhr) {
-					console.log(xhr);
+				console.log(xhr);
 
-					if (xhr.total > 0) {
-						var percentage = (xhr.loaded / total * 100);
-						console.log(percentage + '% loaded');
-						progress('phase 1', percentage);
-					} else {
-						var percentage = (xhr.loaded / total * 100);
-						console.log(percentage + '% loaded');
-						progress('phase 1', percentage);
-						// console.log('Total size is 0; unable to calculate percentage.');
-						// progressBug('phase 1');
-					}
+				if (xhr.total > 0) {
+					console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+					progress('phase 1', xhr.loaded / xhr.total * 100);
+				} else {
+					console.log('Total size is 0; unable to calculate percentage.');
+					progressBug('phase 1');
 				}
+			}
 
 			function onError(xhr) {
 				console.log('An error happened');
@@ -508,8 +477,6 @@
 				console.time("Time this");
 				let loader = new GLTFLoader();
 
-				total = targetInfo5.size
-				
 				loader.load(targetInfo5.modelPath + targetInfo5.modelFile, function (gltf) {
 					mesh0 = gltf.scene;
 					mesh0.rotation.x = Math.PI / 2;
@@ -537,20 +504,16 @@
 			// }
 
 			function onProgress(xhr) {
-					console.log(xhr);
+				console.log(xhr);
 
-					if (xhr.total > 0) {
-						var percentage = (xhr.loaded / total * 100);
-						console.log(percentage + '% loaded');
-						progress('phase 1', percentage);
-					} else {
-						var percentage = (xhr.loaded / total * 100);
-						console.log(percentage + '% loaded');
-						progress('phase 1', percentage);
-						// console.log('Total size is 0; unable to calculate percentage.');
-						// progressBug('phase 1');
-					}
+				if (xhr.total > 0) {
+					console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+					progress('phase 1', xhr.loaded / xhr.total * 100);
+				} else {
+					console.log('Total size is 0; unable to calculate percentage.');
+					progressBug('phase 1');
 				}
+			}
 
 			function onError(xhr) {
 				console.log('An error happened');
